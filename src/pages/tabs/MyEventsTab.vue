@@ -6,7 +6,6 @@
         :options="events"
         v-model="selectedEventType"
         label="title"
-        :dropdown-should-open="() => true"
       ></v-select>
     </div>
     <div class="label_wrapper">
