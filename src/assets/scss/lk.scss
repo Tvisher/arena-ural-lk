@@ -3,8 +3,13 @@ $color_orange: #ef723b;
 
 .lk-template {
   border-top: 1px solid #f2f4f7;
-  align-items: flex-start;
+  align-items: stretch;
   display: flex;
+  // background: #f9fafb;
+}
+
+.lk-user__wrapper {
+  position: relative;
   background: #f9fafb;
 }
 
@@ -42,6 +47,8 @@ $color_orange: #ef723b;
   }
 
   .user__fan-id {
+    border-radius: 9px;
+    background: #fff;
     padding: 10px;
     display: flex;
     align-items: center;
@@ -68,10 +75,13 @@ $color_orange: #ef723b;
     }
   }
   .user__id {
+    padding: 24px 0;
     color: #344054;
     font-size: 14px;
     font-weight: 500;
     line-height: 140%;
+    border-bottom: 1px solid #eaecf0;
+    border-top: 1px solid #eaecf0;
   }
 
   .info-row {

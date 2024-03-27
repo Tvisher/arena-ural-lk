@@ -58,13 +58,14 @@
   display: flex;
   border-radius: 16px;
   border: 1px solid #d0d5dd;
-  background: #f9fafb;
+  background-color: #f9fafb;
   padding: 24px;
   gap: 20px;
   justify-content: space-between;
-  transition: border-color 0.2s ease-in-out;
+  transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
   &:hover {
     border-color: #ef723b;
+    background-color: #fff;
   }
 }
 .event-block__nameplates {
