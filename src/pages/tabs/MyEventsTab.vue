@@ -10,7 +10,7 @@
     </div>
     <div class="label_wrapper">
       <div class="label_title">Дата</div>
-      <div class="date_input date_selection_item">
+      <!-- <div class="date_input date_selection_item">
         <input
           type="text"
           class="form_input date_input_input"
@@ -22,7 +22,26 @@
             <use xlink:href="@/assets/imgs/sprite.symbol.svg#close"></use>
           </svg>
         </span>
-      </div>
+      </div> -->
+      <VueDatePicker
+        v-model="selectedDate"
+        class="my-events-calendar"
+        locale="ru"
+        range
+        multi-calendars
+        month-name-format="long"
+        :enable-time-picker="false"
+        :month-change-on-scroll="false"
+        :format="format"
+        placeholder="ДД.ММ.ГГГГ—ДД.ММ.ГГГГ"
+      >
+        <template #action-row="{ selectDate, closePicker }">
+          <div class="action-row">
+            <button class="close-button" @click="closePicker">Отмена</button>
+            <button class="select-button" @click="selectDate">Применить</button>
+          </div>
+        </template>
+      </VueDatePicker>
     </div>
   </div>
   <div class="events_list">
@@ -206,11 +225,157 @@ const events = ref([
   { title: "Другие спортивные мероприятия" },
   { title: "Культурно-массовые мероприятия" },
 ]);
+const selectedDate = ref("");
 const selectedEventType = ref(events.value[0].title);
+
+const format = (date) => {
+  let dateFrom = {
+    day: date[0].getDate() < 10 ? `0${date[0].getDate()}` : date[0].getDate(),
+    month:
+      date[0].getMonth() + 1 < 10
+        ? `0${date[0].getMonth() + 1}`
+        : date[0].getMonth() + 1,
+    year: date[0].getFullYear(),
+  };
+  dateFrom = `${dateFrom.day}.${dateFrom.month}.${dateFrom.year}`;
+
+  let dateTo = {
+    day: date[1].getDate() < 10 ? `0${date[1].getDate()}` : date[1].getDate(),
+    month:
+      date[1].getMonth() + 1 < 10
+        ? `0${date[1].getMonth() + 1}`
+        : date[1].getMonth() + 1,
+    year: date[1].getFullYear(),
+  };
+  dateTo = `${dateTo.day}.${dateTo.month}.${dateTo.year}`;
+
+  return `${dateFrom} - ${dateTo}`;
+};
 </script>
 
 <style lang="scss">
 @import "vue-select/dist/vue-select.css";
+.my-events-calendar {
+  font-family: "Inter", sans-serif;
+  .dp__input {
+    font-size: 14px;
+    min-width: 240px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    font-weight: 600;
+  }
+  .dp__action_row {
+    justify-content: flex-end;
+    .action-row {
+      display: flex;
+      gap: 12px !important;
+    }
+  }
+  .select-button,
+  .close-button {
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 16px !important;
+    min-width: 110px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    height: auto !important;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .select-button {
+    background-color: #ef723b;
+  }
+  .close-button {
+    color: #344054;
+    border: 1px solid #d0d5dd;
+    background-color: #fff;
+  }
+  .dp__range_end,
+  .dp__range_start,
+  .dp__active_date {
+    background-color: #ef723b;
+  }
+
+  .dp__range_start {
+    border-radius: 0;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+  }
+  .dp__range_end {
+    border-radius: 0;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  .dp__today {
+    border-radius: 20px;
+    border-color: #ef723b;
+  }
+  .dp__calendar_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
+  .dp__cell_inner {
+    font-size: 13px;
+    line-height: 120%;
+  }
+  .dp__outer_menu_wrap {
+    box-shadow: 0px 4px 80px rgba(22, 22, 22, 0.12);
+    border-radius: 15px;
+    .dp__menu {
+      border: none !important;
+    }
+  }
+  .dp__action_row {
+    padding: 15px 24px;
+  }
+  .dp__menu_inner {
+    padding: 15px 24px;
+  }
+  .dp__month_year_wrap {
+    font-size: 14px;
+    justify-content: center;
+    button {
+      width: fit-content;
+    }
+  }
+  .dp__overlay_cell_active {
+    background-color: #ef723b;
+  }
+  .dp__calendar_header_separator {
+    display: none;
+  }
+  .dp__calendar_header_item {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 142.857%;
+    text-transform: capitalize;
+  }
+  .dp__menu_inner {
+    position: relative;
+    gap: 20px;
+    &::before {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      height: 100%;
+      width: 1px;
+      content: "";
+      background: #eaecf0;
+    }
+    border-bottom: 1px solid #eaecf0;
+  }
+  .dp__arrow_top {
+    display: none;
+  }
+}
+
 .events_col {
   width: 50% !important;
 }
