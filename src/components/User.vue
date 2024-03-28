@@ -39,7 +39,20 @@
       </div>
       <div class="info-row">
         <div class="info-row__name">Соцсети:</div>
-        <a href="" class="info-row__value">vk.com</a>
+        <div class="info-row__value socials-list">
+          <a href="javascript:void(0)" class="social-item">
+            <img src="@/assets/imgs/ok.svg" alt="" />
+          </a>
+          <a href="javascript:void(0)" class="social-item">
+            <img src="@/assets/imgs/telegram.svg" alt="" />
+          </a>
+          <a href="javascript:void(0)" class="social-item">
+            <img src="@/assets/imgs/whatsapp.svg" alt="" />
+          </a>
+          <a href="javascript:void(0)" class="social-item">
+            <img src="@/assets/imgs/vk.svg" alt="" />
+          </a>
+        </div>
       </div>
       <hr />
       <div class="lk-user__btns">

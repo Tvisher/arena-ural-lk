@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <!-- <header class="header">
     <div class="container">
       <div class="header_row">
         <a href="/" class="logo">
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-  </header>
+  </header> -->
   <div class="container">
     <div class="lk-template">
       <div class="lk-content">

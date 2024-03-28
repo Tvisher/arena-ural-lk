@@ -109,6 +109,23 @@ $color_orange: #ef723b;
     color: #101828;
     font-size: 18px;
     font-weight: 500;
+    &.socials-list {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      .social-item {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        img,
+        svg {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          object-position: center;
+        }
+      }
+    }
   }
   a.info-row__value {
     color: #ef723b;
