@@ -1,7 +1,7 @@
 <template>
   <h2 class="lk-content__title font_code">Настройка личного кабинета</h2>
 
-  <fotm class="user-settings-form">
+  <form class="user-settings-form">
     <div class="form_input_row three-cols">
       <label class="form_input_group">
         <span class="form_input_name">Телефон</span>
@@ -306,13 +306,16 @@
         <a href="#" class="btn">Сохранить</a>
       </div>
     </div>
-  </fotm>
+  </form>
 </template>
 <script setup>
 import AddUserImage from "@/components/AddUserImage.vue";
 </script>
 
 <style lang="scss" scoped>
+.user-settings-form {
+  padding-bottom: 20px;
+}
 .settings-form__footer {
   display: flex;
   align-items: center;
