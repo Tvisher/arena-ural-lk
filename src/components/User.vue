@@ -2,12 +2,12 @@
   <div class="lk-user__wrapper">
     <div class="lk-user">
       <div class="user__image-wrapper">
-        <div
-          class="user__image"
-          style="
-            background-image: url(https://st4.depositphotos.com/6903990/27898/i/450/depositphotos_278981062-stock-photo-beautiful-young-woman-clean-fresh.jpg);
-          "
-        ></div>
+        <div class="user__image">
+          <img
+            src="https://st4.depositphotos.com/6903990/27898/i/450/depositphotos_278981062-stock-photo-beautiful-young-woman-clean-fresh.jpg)"
+            alt=""
+          />
+        </div>
       </div>
       <div class="user__title">Иванова Ольга Ивановна</div>
       <div class="user__fan-id">

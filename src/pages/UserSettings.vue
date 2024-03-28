@@ -313,6 +313,9 @@ import AddUserImage from "@/components/AddUserImage.vue";
 </script>
 
 <style lang="scss" scoped>
+.btn {
+  width: fit-content;
+}
 .user-settings-form {
   padding-bottom: 20px;
 }
