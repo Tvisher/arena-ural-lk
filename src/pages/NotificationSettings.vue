@@ -5,18 +5,11 @@
   </div>
   <div class="categories_list">
     <div class="categories_col">
-      <input
-        type="checkbox"
-        name="categories_type"
-        value="1"
-        checked="checked"
-      />
+      <input type="checkbox" name="categories_type" value="1" checked="checked" />
       <div class="categories_item">
         <div class="categories_item_icon">
           <svg class="w16 fill_none stroke_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-            ></use>
+            <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"></use>
           </svg>
         </div>
         <div>
@@ -33,9 +26,7 @@
       <div class="categories_item">
         <div class="categories_item_icon">
           <svg class="w16 fill_none stroke_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_hockey"
-            ></use>
+            <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_hockey"></use>
           </svg>
         </div>
         <div>
@@ -52,9 +43,7 @@
       <div class="categories_item">
         <div class="categories_item_icon">
           <svg class="w16 fill_none stroke_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_sport"
-            ></use>
+            <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_sport"></use>
           </svg>
         </div>
         <div>
@@ -71,9 +60,7 @@
       <div class="categories_item">
         <div class="categories_item_icon">
           <svg class="w16 fill_none stroke_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_cultural"
-            ></use>
+            <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_cultural"></use>
           </svg>
         </div>
         <div>
@@ -89,11 +76,8 @@
     </div>
   </div>
   <div class="events_item_btns">
-    <router-link
-      class="btn btn_small btn_white"
-      :to="{ name: 'TabItem', params: { tabId: 'calendar' } }"
-    >
-      Отменить
+    <router-link class="btn btn_small btn_white" :to="{ name: 'TabItem', params: { tabId: 'notifications' } }">
+      Назад
     </router-link>
     <a href="javascript:void(0)" class="btn btn_small">Изменить</a>
   </div>
@@ -104,9 +88,11 @@
 .categories_item_dot {
   margin-left: auto !important;
 }
+
 .events_item_btns {
   width: 100%;
   padding: 0 !important;
+
   .btn {
     margin: 0;
     width: calc(50% - 10px);

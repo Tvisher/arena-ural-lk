@@ -56,7 +56,9 @@
           <component :is="Component" />
         </router-view>
       </div>
-      <User />
+      <div class="lk-user__wrapper">
+        <User />
+      </div>
     </div>
   </div>
 

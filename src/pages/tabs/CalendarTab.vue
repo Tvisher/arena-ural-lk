@@ -3,7 +3,7 @@
     class="events-calendar"
     inline
     locale="ru"
-    multi-calendars
+    :multi-calendars="isMultiCalendar"
     auto-apply
     month-name-format="long"
     :model-value="selectedDate"
@@ -200,9 +200,31 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import addDays from "date-fns/addDays";
 const selectedDate = ref(new Date());
+
+const isMultiCalendar = ref("");
+
+// Функция для определения текущего разрешения экрана
+const updateResolution = () => {
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    isMultiCalendar.value = false;
+  } else {
+    isMultiCalendar.value = true;
+  }
+};
+
+// Вызываем функцию при монтировании компонента и добавляем обработчик изменения размера окна
+onMounted(() => {
+  updateResolution();
+  window.addEventListener("resize", updateResolution);
+});
+
+// Удаляем обработчик изменения размера окна при удалении компонента
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateResolution);
+});
 
 const highlightedDates = ref([
   addDays(new Date(), 0),
@@ -220,6 +242,7 @@ const handleDate = (modelData) => {
 
 <style lang="scss">
 .events-calendar {
+  justify-content: center;
   .dp__input_wrap,
   .dp__action_row {
     display: none !important;
@@ -229,6 +252,7 @@ const handleDate = (modelData) => {
   .dp__main {
     flex-direction: column;
     gap: 0px !important;
+
     [disabled] {
       width: 100%;
     }
@@ -238,13 +262,16 @@ const handleDate = (modelData) => {
     justify-content: center;
     width: 100%;
     gap: 100px;
+
     & > div {
       width: fit-content;
     }
   }
+
   .dp__menu_inner {
     padding: 0 !important;
   }
+
   .dp__menu {
     border: none !important;
   }
@@ -260,21 +287,26 @@ const handleDate = (modelData) => {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+
     &::first-letter {
       text-transform: uppercase;
     }
   }
+
   .dp__calendar_header {
     gap: 4px;
   }
+
   .dp__calendar_row {
     margin: 4px 0 !important;
     gap: 4px;
   }
+
   .dp__calendar_item {
     width: 40px !important;
     height: 40px !important;
   }
+
   .dp__cell_inner {
     display: flex;
     align-items: center;
@@ -289,13 +321,16 @@ const handleDate = (modelData) => {
     font-weight: 500;
     line-height: 100%;
   }
+
   .dp__cell_offset {
     opacity: 0;
     visibility: hidden;
   }
+
   .dp__calendar_header_separator {
     display: none;
   }
+
   .dp__btn.dp__month_year_select {
     color: #000;
     width: fit-content !important;
@@ -305,19 +340,23 @@ const handleDate = (modelData) => {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+
     &:last-child {
       display: none;
     }
   }
+
   .dp__month_year_wrap {
     width: fit-content !important;
   }
+
   .dp__month_year_row {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 18px;
   }
+
   .dp--arrow-btn-nav {
     cursor: pointer;
     border-radius: 10px;
@@ -328,6 +367,7 @@ const handleDate = (modelData) => {
     padding: 0 !important;
     width: 32px !important;
     height: 32px !important;
+
     .dp__inner_nav {
       width: 100%;
       height: 100%;
@@ -339,6 +379,7 @@ const handleDate = (modelData) => {
     border: none !important;
     color: #ef723b;
   }
+
   .dp__cell_inner {
     border-radius: 50% !important;
   }
@@ -348,6 +389,7 @@ const handleDate = (modelData) => {
     box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 1);
     color: #fff;
   }
+
   .dp__cell_highlight {
     background-color: #ef723b !important;
     color: #fff;
@@ -362,6 +404,7 @@ const handleDate = (modelData) => {
   .dp__overlay_cell_active {
     background-color: #ef723b !important;
   }
+
   .dp__overlay_cell {
     font-weight: 600;
   }

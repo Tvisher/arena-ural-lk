@@ -1,10 +1,9 @@
 <template>
   <h2 class="lk-content__title font_code">Настройка личного кабинета</h2>
-
   <form class="user-settings-form">
     <div class="form_input_row three-cols">
       <label class="form_input_group">
-        <span class="form_input_name">Телефон</span>
+        <span class="form_input_name">Имя</span>
         <span class="form_input_wrapper">
           <input
             type="text"
@@ -46,7 +45,7 @@
     <div class="form_input_row one-col">
       <label class="form_input_group" style="margin-bottom: 6px">
         <span class="form_input_name">Дата рождения</span>
-        <span class="form_input_wrapper">
+        <!-- <span class="form_input_wrapper">
           <div class="label-has-ico">
             <div class="ico">
               <svg
@@ -74,7 +73,20 @@
               readonly
             />
           </div>
-        </span>
+        </span> -->
+        <VueDatePicker
+          v-model="selectedDate"
+          class="my-events-calendar user-settings-calendar"
+          locale="ru"
+          auto-apply
+          month-name-format="long"
+          :enable-time-picker="false"
+          :month-change-on-scroll="false"
+          placeholder="ДД.ММ.ГГГГ"
+          :format="dateFormat"
+          :max-date="new Date()"
+        >
+        </VueDatePicker>
       </label>
     </div>
     <hr />
@@ -140,11 +152,11 @@
               </svg>
             </div>
             <input
-              type="text"
-              name="name"
-              placeholder="Ваш телефон"
+              ref="phoneField"
               class="form_input"
-              value="8 800 900 00 00"
+              v-model="userPhone"
+              placeholder="Ваш телефон"
+              maxlength="16"
             />
           </div>
           <span class="text_error">Заполните поле</span>
@@ -211,7 +223,6 @@
         </span>
       </label>
     </div>
-
     <div class="form_input_row one-col">
       <label class="form_input_group" style="margin-bottom: 10px">
         <span class="form_input_name">Ссылка Вконтакте</span>
@@ -226,7 +237,6 @@
         </span>
       </label>
     </div>
-
     <div class="form_input_row one-col">
       <label class="form_input_group" style="margin-bottom: 10px">
         <span class="form_input_name">Ссылка Одноклассники</span>
@@ -241,7 +251,6 @@
         </span>
       </label>
     </div>
-
     <div class="form_input_row one-col">
       <label class="form_input_group" style="margin-bottom: 0px">
         <span class="form_input_name">Ссылка Телеграмм</span>
@@ -257,9 +266,7 @@
       </label>
     </div>
     <hr />
-
     <AddUserImage />
-
     <div class="form_input_row one-col">
       <label class="form_input_group">
         <span class="form_input_name">О себе</span>
@@ -295,94 +302,144 @@
         </svg>
         <span>Привязать</span>
       </a>
-
       <div class="events_item_btns">
-        <router-link
-          class="btn btn_small btn_white"
+        <!-- <router-link
+          class="btn btn_white"
           :to="{ name: 'TabItem', params: { tabId: 'calendar' } }"
         >
           Отменить
-        </router-link>
+        </router-link> -->
+        <button
+          type="button"
+          class="btn btn_white"
+          @click="this.$router.back()"
+        >
+          Назад
+        </button>
         <a href="#" class="btn">Сохранить</a>
       </div>
     </div>
   </form>
 </template>
 <script setup>
+import { ref } from "vue";
 import AddUserImage from "@/components/AddUserImage.vue";
+import { useIMask } from "vue-imask";
+
+const selectedDate = ref("");
+const userPhone = ref("");
+
+const dateFormat = (date) => {
+  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+  const month =
+    date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+  const year = date.getFullYear();
+  return `${day}.${month}.${year}`;
+};
+
+const { el: phoneField } = useIMask({
+  mask: "+{7}(000)000-00-00",
+});
 </script>
 
-<style lang="scss" scoped>
-.btn {
-  width: fit-content;
-}
+<style lang="scss">
 .user-settings-form {
-  padding-bottom: 20px;
-}
-.settings-form__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.events_item_btns {
-  padding: 0;
-}
-.form_input_descr {
-  color: #475467;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-}
-.label-has-ico {
-  position: relative;
-  .form_input {
-    padding-left: 42px;
+  .dp__menu_inner::before {
+    display: none !important;
   }
-  .ico {
-    position: absolute;
-    left: 14px;
-    width: 20px;
-    height: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+
+  .user-settings-calendar .dp__input {
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
   }
-}
-.form_input_name {
-  color: #344054;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
-  margin-bottom: 6px;
-  display: block;
-}
-.three-cols {
-  .form_input_group {
-    width: calc(33.33% - 16px) !important;
+  .btn {
+    width: fit-content;
   }
-}
-.one-col {
-  .form_input_group {
-    width: 100% !important;
+  .user-settings-form {
+    padding-bottom: 20px;
+  }
+  .settings-form__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .events_item_btns {
+    padding: 0;
+  }
+  .form_input_descr {
+    color: #475467;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+  }
+  .label-has-ico {
+    position: relative;
+    .form_input {
+      padding-left: 42px;
+    }
+    .ico {
+      position: absolute;
+      left: 14px;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+  }
+  .form_input_name {
+    color: #344054;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .three-cols {
+    .form_input_group {
+      width: calc(33.33% - 16px) !important;
+    }
+  }
+  .one-col {
+    .form_input_group {
+      width: 100% !important;
+    }
+  }
+
+  .some-message {
+    color: #475467;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    a {
+      color: #ef723b;
+      font-size: 14px;
+      line-height: 20px;
+      text-decoration-line: underline;
+    }
+  }
+  hr {
+    margin: 20px 0;
+    opacity: 0.2;
   }
 }
 
-.some-message {
-  color: #475467;
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  a {
-    color: #ef723b;
-    font-size: 14px;
-    line-height: 20px;
-    text-decoration-line: underline;
+@media (max-width: 576px) {
+  .events_item_btns {
+    width: 100%;
   }
-}
-hr {
-  margin: 20px 0;
-  opacity: 0.2;
+  .settings-form__footer {
+    flex-direction: column;
+    gap: 20px;
+    .btn {
+      width: 100% !important;
+      margin: 0;
+    }
+  }
 }
 </style>

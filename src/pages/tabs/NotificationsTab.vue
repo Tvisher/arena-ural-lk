@@ -1,5 +1,34 @@
 <template>
+  <div class="notifications-head">
+    <div class="notifications-tabs-btns">
+      <div
+        class="notifications-tabs-btn"
+        @click="setCurrenTab('actual')"
+        :class="{ active: currentTab == 'actual' }"
+      >
+        Актуальные
+      </div>
+      <div
+        class="notifications-tabs-btn"
+        @click="setCurrenTab('important')"
+        :class="{ active: currentTab == 'important' }"
+      >
+        Важные
+      </div>
+      <div
+        class="notifications-tabs-btn"
+        @click="setCurrenTab('all')"
+        :class="{ active: currentTab == 'all' }"
+      >
+        Все
+      </div>
+    </div>
+    <router-link class="btn" :to="{ name: 'NotificationSettings' }">
+      Настройка уведомлений
+    </router-link>
+  </div>
   <div class="notifications-list">
+    <div class="date-title">Сегодня</div>
     <div class="notification-item">
       <div class="notification-item__content">
         <a href="javascript:void(0)" class="notification-item__title"
@@ -10,6 +39,7 @@
         </div>
       </div>
     </div>
+    <div class="date-title">Вчера</div>
 
     <div class="notification-item">
       <div class="notification-item__content">
@@ -21,6 +51,7 @@
         </div>
       </div>
     </div>
+    <div class="date-title">30.04.2024</div>
 
     <div class="notification-item">
       <div class="notification-item__content">
@@ -46,7 +77,11 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+const currentTab = ref("actual");
+const setCurrenTab = (tabName) => (currentTab.value = tabName);
+</script>
 
 <style lang="scss" scoped>
 .notifications-list {
@@ -54,6 +89,56 @@
   flex-direction: column;
   gap: 24px;
 }
+
+.date-title {
+  color: #667085;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+  text-align: center;
+}
+
+.notifications-tabs-btns {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #667085;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+}
+
+.notifications-tabs-btn {
+  cursor: pointer;
+  padding: 14px 4px;
+  padding-top: 0;
+
+  border-bottom: 2px solid transparent;
+
+  &.active {
+    border-color: #ef723b;
+    color: #ef723b;
+  }
+}
+
+.notifications-head {
+  flex-wrap: wrap;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  gap: 20px;
+  @media (max-width: 600px) {
+    .btn {
+      order: -1;
+      width: 100%;
+    }
+  }
+}
+
 .notification-item {
   display: flex;
   border-radius: 16px;
@@ -63,23 +148,28 @@
   gap: 20px;
   justify-content: space-between;
   transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
   &:hover {
     border-color: #ef723b;
     background-color: #fff;
   }
 }
+
 .event-block__nameplates {
   flex-shrink: 0;
 }
+
 .notification-item__title {
   color: #000;
   font-family: Inter;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
-  line-height: 133%; /* 133.333% */
+  line-height: 133%;
+  /* 133.333% */
   margin-bottom: 8px;
 }
+
 .notification-item__descr {
   margin-bottom: 8px;
   color: #475467;
@@ -87,8 +177,10 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 150% */
+  line-height: 150%;
+  /* 150% */
 }
+
 .events_item_btns {
   padding: 0;
   margin-top: 24px;

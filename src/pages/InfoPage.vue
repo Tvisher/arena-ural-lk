@@ -32,6 +32,13 @@
       >
         Архив мероприятий
       </router-link>
+
+      <router-link
+        class="tabs_link_item _profile-link"
+        :to="{ name: 'TabItem', params: { tabId: 'profile' } }"
+      >
+        Профиль
+      </router-link>
     </div>
 
     <div class="tabs-pages">
