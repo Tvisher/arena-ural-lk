@@ -28,7 +28,7 @@
 
       <router-link
         class="tabs_link_item"
-        :to="{ name: 'TabItem', params: { tabId: 'events-archive' } }"
+        :to="{ name: 'TabItem', params: { tabId: 'archive' } }"
       >
         Архив мероприятий
       </router-link>

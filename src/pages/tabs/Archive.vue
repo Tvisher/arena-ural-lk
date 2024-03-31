@@ -1,36 +1,4 @@
 <template>
-  <div class="filter">
-    <div class="label_wrapper">
-      <div class="label_title">Тип мероприятия</div>
-      <v-select
-        :options="events"
-        v-model="selectedEventType"
-        label="title"
-      ></v-select>
-    </div>
-    <div class="label_wrapper">
-      <div class="label_title">Дата</div>
-      <VueDatePicker
-        v-model="selectedDate"
-        class="my-events-calendar range-calendar"
-        locale="ru"
-        range
-        multi-calendars
-        month-name-format="long"
-        :enable-time-picker="false"
-        :month-change-on-scroll="false"
-        :format="format"
-        placeholder="ДД.ММ.ГГГГ—ДД.ММ.ГГГГ"
-      >
-        <template #action-row="{ selectDate, closePicker }">
-          <div class="action-row">
-            <button class="close-button" @click="closePicker">Отмена</button>
-            <button class="select-button" @click="selectDate">Применить</button>
-          </div>
-        </template>
-      </VueDatePicker>
-    </div>
-  </div>
   <div class="events_list">
     <div class="events_col">
       <div class="events_item">
@@ -41,7 +9,6 @@
             ></use>
           </svg>
         </div>
-        <div class="label label_text">Идёт набор</div>
         <div class="item_img">
           <img src="@/assets/imgs/events_img.png" alt="" />
         </div>
@@ -83,7 +50,6 @@
           </ul>
         </div>
         <div class="events_item_btns">
-          <a href="#" class="btn btn_small">Отказаться от участия</a>
           <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
         </div>
       </div>
@@ -97,7 +63,6 @@
             ></use>
           </svg>
         </div>
-        <div class="label label_text">Идёт набор</div>
         <div class="item_img">
           <img src="@/assets/imgs/events_img.png" alt="" />
         </div>
@@ -139,7 +104,6 @@
           </ul>
         </div>
         <div class="events_item_btns">
-          <a href="#" class="btn btn_small">Отказаться от участия</a>
           <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
         </div>
       </div>
@@ -153,7 +117,6 @@
             ></use>
           </svg>
         </div>
-        <div class="label label_text">Идёт набор</div>
         <div class="item_img">
           <img src="@/assets/imgs/events_img.png" alt="" />
         </div>
@@ -195,7 +158,6 @@
           </ul>
         </div>
         <div class="events_item_btns">
-          <a href="#" class="btn btn_small">Отказаться от участия</a>
           <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
         </div>
       </div>

@@ -506,6 +506,15 @@ $color_orange: #ef723b;
 }
 
 @media (max-width: 768px) {
+  .notification-item__title {
+    font-size: 22px;
+  }
+  .notification-item {
+    flex-direction: column;
+  }
+  .event-block__nameplates {
+    order: -1;
+  }
   .tabs_link_list {
     margin-bottom: 20px;
   }
