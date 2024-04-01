@@ -6,6 +6,7 @@
         :options="events"
         v-model="selectedEventType"
         label="title"
+        :searchable="false"
       ></v-select>
     </div>
     <div class="label_wrapper">
