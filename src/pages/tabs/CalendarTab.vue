@@ -13,17 +13,18 @@
     @update:model-value="handleDate"
   />
 
-  <div class="calendar-events__list">
-    <div class="event-block">
+  <div class="calendar-events__list" v-if="currentDayHasEvents">
+    <div
+      class="event-block"
+      v-for="eventItem in currentDayEvents"
+      :key="eventItem.id"
+    >
       <div class="event-block__wrapper">
         <div class="event-block__info">
           <div class="event-block__title">
-            Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит”
+            {{ eventItem.post_title }}
           </div>
-          <div class="event-block__descr">
-            We’re looking for an experienced engineering manager to join our
-            team.
-          </div>
+          <div class="event-block__descr" v-html="eventItem.post_content"></div>
           <ul class="events_item_list">
             <li>
               <svg class="w20 fill_none stroke_black">
@@ -31,7 +32,7 @@
                   xlink:href="@/assets/imgs/sprite.symbol.svg#location"
                 ></use>
               </svg>
-              Свердловская обл, г Екатеринбург
+              {{ eventItem.adress }}
             </li>
             <li>
               <svg class="w20 fill_none stroke_black">
@@ -39,18 +40,24 @@
                   xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
                 ></use>
               </svg>
-              20 января 2024
+              {{ dateForEvent(eventItem.date) }}
             </li>
             <li>
               <svg class="w20 fill_none stroke_black">
                 <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
               </svg>
-              19:00-21:30
+              {{ eventItem.start }}{{ ` - ${eventItem.end}` }}
             </li>
           </ul>
           <div class="events_item_btns">
-            <a href="#" class="btn btn_small">Подать заявку</a
-            ><a href="#" class="btn btn_small btn_opacity">Подробнее</a>
+            <a href="#" class="btn btn_small" v-if="eventItem.status.value == 1"
+              >Подать заявку</a
+            ><a
+              :href="decodeURIComponent(eventItem.link)"
+              target="_blank"
+              class="btn btn_small btn_opacity"
+              >Подробнее</a
+            >
           </div>
         </div>
         <div class="event-block__nameplates">
@@ -60,7 +67,7 @@
                 xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
               ></use>
             </svg>
-            <span>Футбол</span>
+            <span>{{ eventItem.type.label }}</span>
             <!-- <svg class="w24 fill_none">
               <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_cultural"></use>
             </svg> -->
@@ -71,141 +78,35 @@
               <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_sport"></use>
             </svg> -->
           </div>
-          <div class="label label_text">Идёт набор</div>
-        </div>
-      </div>
-    </div>
-    <div class="event-block">
-      <div class="event-block__wrapper">
-        <div class="event-block__info">
-          <div class="event-block__title">
-            Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит”
-          </div>
-          <div class="event-block__descr">
-            We’re looking for an experienced engineering manager to join our
-            team.
-          </div>
-          <ul class="events_item_list">
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#location"
-                ></use>
-              </svg>
-              Свердловская обл, г Екатеринбург
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
-                ></use>
-              </svg>
-              20 января 2024
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
-              </svg>
-              19:00-21:30
-            </li>
-          </ul>
-          <div class="events_item_btns">
-            <a href="#" class="btn btn_small">Подать заявку</a
-            ><a href="#" class="btn btn_small btn_opacity">Подробнее</a>
-          </div>
-        </div>
-        <div class="event-block__nameplates">
-          <div class="label label_cat">
-            <svg class="w24 fill_none">
-              <use
-                xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-              ></use>
-            </svg>
-            <span>Футбол</span>
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_cultural"></use>
-            </svg> -->
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_hockey"></use>
-            </svg> -->
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_sport"></use>
-            </svg> -->
-          </div>
-          <div class="label label_text">Идёт набор</div>
-        </div>
-      </div>
-    </div>
-    <div class="event-block">
-      <div class="event-block__wrapper">
-        <div class="event-block__info">
-          <div class="event-block__title">
-            Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит”
-          </div>
-          <div class="event-block__descr">
-            We’re looking for an experienced engineering manager to join our
-            team.
-          </div>
-          <ul class="events_item_list">
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#location"
-                ></use>
-              </svg>
-              Свердловская обл, г Екатеринбург
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
-                ></use>
-              </svg>
-              20 января 2024
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
-              </svg>
-              19:00-21:30
-            </li>
-          </ul>
-          <div class="events_item_btns">
-            <a href="#" class="btn btn_small">Подать заявку</a
-            ><a href="#" class="btn btn_small btn_opacity">Подробнее</a>
-          </div>
-        </div>
-        <div class="event-block__nameplates">
-          <div class="label label_cat">
-            <svg class="w24 fill_none">
-              <use
-                xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-              ></use>
-            </svg>
-            <span>Футбол</span>
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_cultural"></use>
-            </svg> -->
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_hockey"></use>
-            </svg> -->
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_sport"></use>
-            </svg> -->
-          </div>
-          <div class="label label_text">Идёт набор</div>
+          <div class="label label_text">{{ eventItem.status.label }}</div>
         </div>
       </div>
     </div>
   </div>
+  <h2 v-else class="events-empty">В выбранный вами день событий нет</h2>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import addDays from "date-fns/addDays";
-const selectedDate = ref(new Date());
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+// import addDays from "date-fns/addDays";
 
+import { useLkData } from "@/stores/LkData";
+const LkDataStore = useLkData();
+const allEvents = LkDataStore.allEvents;
+
+const daysHasEventsArr = [...new Set(allEvents.map((eventEl) => eventEl.date))];
+const selectedDate = ref(formatDate(new Date()));
 const isMultiCalendar = ref("");
+const highlightedDates = ref(daysHasEventsArr);
 
+const currentDayEvents = computed(() =>
+  allEvents.filter((eventEl) => eventEl.date === selectedDate.value)
+);
+
+const currentDayHasEvents = computed(() => currentDayEvents.value.length > 0);
+
+const handleDate = (modelData) => {
+  selectedDate.value = formatDate(modelData);
+};
 // Функция для определения текущего разрешения экрана
 const updateResolution = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
@@ -226,22 +127,44 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", updateResolution);
 });
 
-const highlightedDates = ref([
-  addDays(new Date(), 0),
-  addDays(new Date(), 2),
-  addDays(new Date(), 3),
-  addDays(new Date(), 12),
-  addDays(new Date(), 25),
-]);
+function formatDate(inputDate) {
+  const date = new Date(inputDate);
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+  return `${month}-${day}-${year}`;
+}
 
-const handleDate = (modelData) => {
-  console.log(modelData);
-  selectedDate.value = modelData;
-};
+function dateForEvent(inputDate) {
+  const [month, day, year] = inputDate.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  return `${date.getDate()} ${
+    [
+      "января",
+      "февраля",
+      "марта",
+      "апреля",
+      "мая",
+      "июня",
+      "июля",
+      "августа",
+      "сентября",
+      "октября",
+      "ноября",
+      "декабря",
+    ][date.getMonth()]
+  } ${date.getFullYear()}`;
+}
 </script>
 
 <style lang="scss">
+.events-empty {
+  margin: 50px 0;
+  text-align: center;
+}
 .events-calendar {
+  max-width: 700px;
+  margin: auto;
   justify-content: center;
   .dp__input_wrap,
   .dp__action_row {
