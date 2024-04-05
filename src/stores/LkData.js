@@ -15,6 +15,7 @@ export const useLkData = defineStore("LkData", () => {
         birthday: '',
         fanID: '',
         userId: '',
+        userInfo: '',
         photo: '',
         socials: {
             ok: '',
@@ -37,8 +38,9 @@ export const useLkData = defineStore("LkData", () => {
         userData.value.fanID = data.fanID;
         userData.value.userId = data.ID;
         userData.value.photo = data.photo_url;
+        userData.value.userInfo = data.user_bio;
         userData.value.socials.ok = data.ok;
-        userData.value.socials.tg = data.tg;
+        userData.value.socials.tg = data.telegram;
         userData.value.socials.whatsupp = data.whatsupp;
         userData.value.socials.vk = data.vk;
         allEvents.value = data.gigs;

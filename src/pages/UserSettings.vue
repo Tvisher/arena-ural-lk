@@ -10,7 +10,7 @@
             name="name"
             placeholder="Ваше имя"
             class="form_input"
-            value="Ольга"
+            v-model="userSettingsData.name"
           />
           <span class="text_error">Заполните поле</span>
         </span>
@@ -23,7 +23,7 @@
             name="lastName"
             placeholder="Ваша фамилия"
             class="form_input"
-            value="Иванова"
+            v-model="userSettingsData.lastname"
           />
           <span class="text_error">Заполните поле</span>
         </span>
@@ -36,7 +36,7 @@
             name="lastName"
             placeholder="Ваша фамилия"
             class="form_input"
-            value="Ивановна"
+            v-model="userSettingsData.patronymic"
           />
           <span class="text_error">Заполните поле</span>
         </span>
@@ -45,37 +45,8 @@
     <div class="form_input_row one-col">
       <label class="form_input_group" style="margin-bottom: 6px">
         <span class="form_input_name">Дата рождения</span>
-        <!-- <span class="form_input_wrapper">
-          <div class="label-has-ico">
-            <div class="ico">
-              <svg
-                width="18"
-                height="20"
-                viewBox="0 0 18 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.3333 1.66675V5.00008M5.66667 1.66675V5.00008M1.5 8.33342H16.5M3.16667 3.33341H14.8333C15.7538 3.33341 16.5 4.07961 16.5 5.00008V16.6667C16.5 17.5872 15.7538 18.3334 14.8333 18.3334H3.16667C2.24619 18.3334 1.5 17.5872 1.5 16.6667V5.00008C1.5 4.07961 2.24619 3.33341 3.16667 3.33341Z"
-                  stroke="black"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-            <input
-              type="text"
-              name="name"
-              placeholder=""
-              class="form_input"
-              value="10.20.2024"
-              readonly
-            />
-          </div>
-        </span> -->
         <VueDatePicker
-          v-model="selectedDate"
+          v-model="userSettingsData.birthday"
           class="my-events-calendar user-settings-calendar"
           locale="ru"
           auto-apply
@@ -117,7 +88,7 @@
               name="name"
               placeholder="Ваш Email"
               class="form_input"
-              value="olivia@untitledui.ru"
+              v-model="userSettingsData.email"
             />
           </div>
           <span class="text_error">Заполните поле</span>
@@ -154,7 +125,7 @@
             <input
               ref="phoneField"
               class="form_input"
-              v-model="userPhone"
+              v-model="userSettingsData.phone"
               placeholder="Ваш телефон"
               maxlength="16"
             />
@@ -172,7 +143,7 @@
             name="name"
             placeholder="Паспорт болельщика"
             class="form_input"
-            value="2983"
+            v-model="userSettingsData.fanID"
           />
         </span>
       </label>
@@ -182,7 +153,7 @@
       <a href="javascript:void(0)">"тут"</a>
     </div>
     <hr />
-    <div class="form_input_row three-cols">
+    <!-- <div class="form_input_row three-cols">
       <label class="form_input_group">
         <span class="form_input_name">Старый пароль</span>
         <span class="form_input_wrapper">
@@ -222,7 +193,7 @@
           <span class="text_error">Заполните поле</span>
         </span>
       </label>
-    </div>
+    </div> -->
     <div class="form_input_row one-col">
       <label class="form_input_group" style="margin-bottom: 10px">
         <span class="form_input_name">Ссылка Вконтакте</span>
@@ -232,7 +203,7 @@
             name="name"
             placeholder=""
             class="form_input"
-            value="vk.com"
+            v-model="userSettingsData.socials.vk"
           />
         </span>
       </label>
@@ -246,13 +217,13 @@
             name="name"
             placeholder=""
             class="form_input"
-            value="vk.com"
+            v-model="userSettingsData.socials.ok"
           />
         </span>
       </label>
     </div>
     <div class="form_input_row one-col">
-      <label class="form_input_group" style="margin-bottom: 0px">
+      <label class="form_input_group" style="margin-bottom: 10px">
         <span class="form_input_name">Ссылка Телеграмм</span>
         <span class="form_input_wrapper">
           <input
@@ -260,7 +231,22 @@
             name="name"
             placeholder=""
             class="form_input"
-            value="vk.com"
+            v-model="userSettingsData.socials.tg"
+          />
+        </span>
+      </label>
+    </div>
+
+    <div class="form_input_row one-col">
+      <label class="form_input_group" style="margin-bottom: 0px">
+        <span class="form_input_name">Ссылка Whatsapp</span>
+        <span class="form_input_wrapper">
+          <input
+            type="text"
+            name="name"
+            placeholder=""
+            class="form_input"
+            v-model="userSettingsData.socials.whatsupp"
           />
         </span>
       </label>
@@ -275,6 +261,7 @@
             name="message"
             class="form_input form_textarea"
             placeholder="Немного о себе"
+            v-model="userSettingsData.userInfo"
           ></textarea>
           <span class="text_error">Заполните поле</span>
         </span>
@@ -303,12 +290,6 @@
         <span>Привязать</span>
       </a>
       <div class="events_item_btns">
-        <!-- <router-link
-          class="btn btn_white"
-          :to="{ name: 'TabItem', params: { tabId: 'calendar' } }"
-        >
-          Отменить
-        </router-link> -->
         <button
           type="button"
           class="btn btn_white"
@@ -326,6 +307,27 @@ import { ref } from "vue";
 import AddUserImage from "@/components/AddUserImage.vue";
 import { useIMask } from "vue-imask";
 
+import { useLkData } from "@/stores/LkData";
+const LkDataStore = useLkData();
+const userData = LkDataStore.userData;
+
+const userSettingsData = ref({
+  name: userData.name,
+  lastname: userData.lastname,
+  patronymic: userData.patronymic,
+  phone: userData.phone,
+  email: userData.email,
+  birthday: formatDate(userData.birthday),
+  fanID: userData.fanID,
+  photo: userData.photo,
+  socials: {
+    ok: userData.socials.ok,
+    tg: userData.socials.tg,
+    whatsupp: userData.socials.whatsupp,
+    vk: userData.socials.vk,
+  },
+});
+
 const selectedDate = ref("");
 const userPhone = ref("");
 
@@ -336,6 +338,11 @@ const dateFormat = (date) => {
   const year = date.getFullYear();
   return `${day}.${month}.${year}`;
 };
+
+function formatDate(inputDate) {
+  const [day, month, year] = inputDate.split(".");
+  return `${month}/${day}/${year}`;
+}
 
 const { el: phoneField } = useIMask({
   mask: "+{7}(000)000-00-00",
