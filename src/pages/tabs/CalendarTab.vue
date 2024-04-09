@@ -83,7 +83,9 @@
       </div>
     </div>
   </div>
-  <h2 v-else class="events-empty">В выбранный вами день событий нет</h2>
+  <h2 v-else class="events-empty">
+    {{ dateForEvent(selectedDate) }} мероприятий нет
+  </h2>
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";

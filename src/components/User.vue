@@ -38,7 +38,10 @@
     </div>
     <div class="info-row">
       <div class="info-row__name">Номер телефона:</div>
-      <div class="info-row__value">{{ userData.phone }}</div>
+      <div class="info-row__value" v-if="userData.phone">
+        {{ userData.phone }}
+      </div>
+      <div class="info-row__value" v-else>Нет данных</div>
     </div>
     <div class="info-row">
       <div class="info-row__name">E-mail:</div>

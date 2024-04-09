@@ -4,39 +4,52 @@
     <div class="form_input_row three-cols">
       <label class="form_input_group">
         <span class="form_input_name">Имя</span>
-        <span class="form_input_wrapper">
+        <span
+          class="form_input_wrapper"
+          :class="{ error: checkValidate && userSettingsData.name.length < 1 }"
+        >
           <input
             type="text"
             name="name"
             placeholder="Ваше имя"
             class="form_input"
-            v-model="userSettingsData.name"
+            v-model.trim="userSettingsData.name"
           />
           <span class="text_error">Заполните поле</span>
         </span>
       </label>
       <label class="form_input_group">
         <span class="form_input_name">Фамилия</span>
-        <span class="form_input_wrapper">
+        <span
+          class="form_input_wrapper"
+          :class="{
+            error: checkValidate && userSettingsData.lastname.length < 1,
+          }"
+        >
           <input
             type="text"
             name="lastName"
             placeholder="Ваша фамилия"
             class="form_input"
-            v-model="userSettingsData.lastname"
+            v-model.trim="userSettingsData.lastname"
           />
           <span class="text_error">Заполните поле</span>
         </span>
       </label>
       <label class="form_input_group">
         <span class="form_input_name">Отчество</span>
-        <span class="form_input_wrapper">
+        <span
+          class="form_input_wrapper"
+          :class="{
+            error: checkValidate && userSettingsData.patronymic.length < 1,
+          }"
+        >
           <input
             type="text"
             name="lastName"
             placeholder="Ваша фамилия"
             class="form_input"
-            v-model="userSettingsData.patronymic"
+            v-model.trim="userSettingsData.patronymic"
           />
           <span class="text_error">Заполните поле</span>
         </span>
@@ -47,6 +60,7 @@
         <span class="form_input_name">Дата рождения</span>
         <VueDatePicker
           v-model="userSettingsData.birthday"
+          model-type="dd.MM.yyyy"
           class="my-events-calendar user-settings-calendar"
           locale="ru"
           auto-apply
@@ -64,7 +78,12 @@
     <div class="form_input_row">
       <label class="form_input_group">
         <span class="form_input_name">Email</span>
-        <span class="form_input_wrapper">
+        <span
+          class="form_input_wrapper"
+          :class="{
+            error: checkValidate && !isEmailValid(userSettingsData.email),
+          }"
+        >
           <div class="label-has-ico">
             <div class="ico">
               <svg
@@ -88,15 +107,20 @@
               name="name"
               placeholder="Ваш Email"
               class="form_input"
-              v-model="userSettingsData.email"
+              v-model.trim="userSettingsData.email"
             />
           </div>
-          <span class="text_error">Заполните поле</span>
+          <span class="text_error">Укажите корректный E-mail</span>
         </span>
       </label>
       <label class="form_input_group">
         <span class="form_input_name">Телефон</span>
-        <span class="form_input_wrapper">
+        <span
+          class="form_input_wrapper"
+          :class="{
+            error: checkValidate && userSettingsData.phone.length < 16,
+          }"
+        >
           <div class="label-has-ico">
             <div class="ico">
               <svg
@@ -130,7 +154,7 @@
               maxlength="16"
             />
           </div>
-          <span class="text_error">Заполните поле</span>
+          <span class="text_error">Укажите корректный номер телефона</span>
         </span>
       </label>
     </div>
@@ -143,7 +167,7 @@
             name="name"
             placeholder="Паспорт болельщика"
             class="form_input"
-            v-model="userSettingsData.fanID"
+            v-model.trim="userSettingsData.fanID"
           />
         </span>
       </label>
@@ -153,47 +177,6 @@
       <a href="javascript:void(0)">"тут"</a>
     </div>
     <hr />
-    <!-- <div class="form_input_row three-cols">
-      <label class="form_input_group">
-        <span class="form_input_name">Старый пароль</span>
-        <span class="form_input_wrapper">
-          <input
-            type="text"
-            name="name"
-            placeholder="***************"
-            class="form_input"
-            value="***************"
-          />
-          <span class="text_error">Заполните поле</span>
-        </span>
-      </label>
-      <label class="form_input_group">
-        <span class="form_input_name">Новый пароль</span>
-        <span class="form_input_wrapper">
-          <input
-            type="text"
-            name="lastName"
-            placeholder="***************"
-            class="form_input"
-            value="***************"
-          />
-          <span class="text_error">Заполните поле</span>
-        </span>
-      </label>
-      <label class="form_input_group">
-        <span class="form_input_name">Повторите новый пароль</span>
-        <span class="form_input_wrapper">
-          <input
-            type="text"
-            name="lastName"
-            placeholder="***************"
-            class="form_input"
-            value="***************"
-          />
-          <span class="text_error">Заполните поле</span>
-        </span>
-      </label>
-    </div> -->
     <div class="form_input_row one-col">
       <label class="form_input_group" style="margin-bottom: 10px">
         <span class="form_input_name">Ссылка Вконтакте</span>
@@ -203,7 +186,7 @@
             name="name"
             placeholder=""
             class="form_input"
-            v-model="userSettingsData.socials.vk"
+            v-model.trim="userSettingsData.socials.vk"
           />
         </span>
       </label>
@@ -217,7 +200,7 @@
             name="name"
             placeholder=""
             class="form_input"
-            v-model="userSettingsData.socials.ok"
+            v-model.trim="userSettingsData.socials.ok"
           />
         </span>
       </label>
@@ -231,7 +214,7 @@
             name="name"
             placeholder=""
             class="form_input"
-            v-model="userSettingsData.socials.tg"
+            v-model.trim="userSettingsData.socials.tg"
           />
         </span>
       </label>
@@ -246,7 +229,7 @@
             name="name"
             placeholder=""
             class="form_input"
-            v-model="userSettingsData.socials.whatsupp"
+            v-model.trim="userSettingsData.socials.whatsupp"
           />
         </span>
       </label>
@@ -261,11 +244,11 @@
             name="message"
             class="form_input form_textarea"
             placeholder="Немного о себе"
-            v-model="userSettingsData.userInfo"
+            v-model.trim="userSettingsData.userInfo"
           ></textarea>
           <span class="text_error">Заполните поле</span>
         </span>
-        <span class="form_input_descr">275 символов</span>
+        <!-- <span class="form_input_descr">275 символов</span> -->
       </label>
     </div>
     <hr />
@@ -290,20 +273,17 @@
         <span>Привязать</span>
       </a>
       <div class="events_item_btns">
-        <button
-          type="button"
-          class="btn btn_white"
-          @click="this.$router.back()"
-        >
+        <button type="button" class="btn btn_white" @click="$router.back()">
           Назад
         </button>
-        <a href="#" class="btn">Сохранить</a>
+        <button type="button" class="btn" @click="saveEdit">Сохранить</button>
       </div>
     </div>
   </form>
 </template>
+<style></style>
 <script setup>
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import AddUserImage from "@/components/AddUserImage.vue";
 import { useIMask } from "vue-imask";
 
@@ -311,15 +291,18 @@ import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
 const userData = LkDataStore.userData;
 
+const checkValidate = ref(false);
+
 const userSettingsData = ref({
   name: userData.name,
   lastname: userData.lastname,
   patronymic: userData.patronymic,
   phone: userData.phone,
   email: userData.email,
-  birthday: formatDate(userData.birthday),
+  birthday: userData.birthday,
   fanID: userData.fanID,
   photo: userData.photo,
+  userInfo: userData.userInfo,
   socials: {
     ok: userData.socials.ok,
     tg: userData.socials.tg,
@@ -327,9 +310,6 @@ const userSettingsData = ref({
     vk: userData.socials.vk,
   },
 });
-
-const selectedDate = ref("");
-const userPhone = ref("");
 
 const dateFormat = (date) => {
   const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -339,18 +319,34 @@ const dateFormat = (date) => {
   return `${day}.${month}.${year}`;
 };
 
-function formatDate(inputDate) {
-  const [day, month, year] = inputDate.split(".");
-  return `${month}/${day}/${year}`;
-}
+const saveEdit = () => {
+  checkValidate.value = true;
+  nextTick(() => {
+    const err = document.querySelector(".user-settings-form .error");
+    if (err) {
+      err.scrollIntoView({ block: "center", behavior: "smooth" });
+      return;
+    }
+    console.log(userSettingsData.value);
+  });
+};
 
 const { el: phoneField } = useIMask({
   mask: "+{7}(000)000-00-00",
 });
+
+function isEmailValid(value) {
+  return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/iu.test(
+    value
+  );
+}
 </script>
 
 <style lang="scss">
 .user-settings-form {
+  .dp__clear_icon {
+    display: none;
+  }
   .dp__menu_inner::before {
     display: none !important;
   }
