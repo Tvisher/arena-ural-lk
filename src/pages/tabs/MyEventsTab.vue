@@ -3,7 +3,7 @@
     <div class="label_wrapper">
       <div class="label_title">Тип мероприятия</div>
       <v-select
-        :options="events"
+        :options="eventsTypes"
         v-model="selectedEventType"
         label="title"
         :searchable="false"
@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="events_list">
-    <div class="events_col">
+    <div class="events_col" v-for="userEvent in userEvents" :key="userEvent.ID">
       <div class="events_item">
         <div class="label label_cat">
           <svg class="w24 fill_none">
@@ -42,22 +42,20 @@
             ></use>
           </svg>
         </div>
-        <div class="label label_text">Идёт набор</div>
+        <div class="label label_text">{{ userEvent.status.label }}</div>
         <div class="item_img">
-          <img src="@/assets/imgs/events_img.png" alt="" />
+          <img :src="userEvent.img" alt="" />
         </div>
         <div class="events_item_body">
           <a href="#" class="item_title">
-            <span> Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит” </span>
+            <span> {{ userEvent.post_title }}</span>
             <svg class="w24 stroke_black">
               <use
                 xlink:href="@/assets/imgs/sprite.symbol.svg#arrow_up_right"
               ></use>
             </svg>
           </a>
-          <div class="events_item_text">
-            Дополнительная информация Дополнительная информация
-          </div>
+          <div class="events_item_text" v-html="userEvent.post_content"></div>
           <ul class="events_item_list">
             <li>
               <svg class="w20 fill_none stroke_black">
@@ -65,7 +63,7 @@
                   xlink:href="@/assets/imgs/sprite.symbol.svg#location"
                 ></use>
               </svg>
-              Свердловская обл, г Екатеринбург
+              {{ userEvent.adress }}
             </li>
             <li>
               <svg class="w20 fill_none stroke_black">
@@ -73,131 +71,24 @@
                   xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
                 ></use>
               </svg>
-              20 января 2024
+              {{ dateForEvent(userEvent.date) }}
             </li>
             <li>
               <svg class="w20 fill_none stroke_black">
                 <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
               </svg>
-              19:00-21:30
+              {{ userEvent.start }}{{ ` - ${userEvent.end}` }}
             </li>
           </ul>
         </div>
         <div class="events_item_btns">
           <a href="#" class="btn btn_small">Отказаться от участия</a>
-          <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
-        </div>
-      </div>
-    </div>
-    <div class="events_col">
-      <div class="events_item">
-        <div class="label label_cat">
-          <svg class="w24 fill_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-            ></use>
-          </svg>
-        </div>
-        <div class="label label_text">Идёт набор</div>
-        <div class="item_img">
-          <img src="@/assets/imgs/events_img.png" alt="" />
-        </div>
-        <div class="events_item_body">
-          <a href="#" class="item_title">
-            <span> Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит” </span>
-            <svg class="w24 stroke_black">
-              <use
-                xlink:href="@/assets/imgs/sprite.symbol.svg#arrow_up_right"
-              ></use>
-            </svg>
-          </a>
-          <div class="events_item_text">
-            Дополнительная информация Дополнительная информация
-          </div>
-          <ul class="events_item_list">
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#location"
-                ></use>
-              </svg>
-              Свердловская обл, г Екатеринбург
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
-                ></use>
-              </svg>
-              20 января 2024
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
-              </svg>
-              19:00-21:30
-            </li>
-          </ul>
-        </div>
-        <div class="events_item_btns">
-          <a href="#" class="btn btn_small">Отказаться от участия</a>
-          <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
-        </div>
-      </div>
-    </div>
-    <div class="events_col">
-      <div class="events_item">
-        <div class="label label_cat">
-          <svg class="w24 fill_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-            ></use>
-          </svg>
-        </div>
-        <div class="label label_text">Идёт набор</div>
-        <div class="item_img">
-          <img src="@/assets/imgs/events_img.png" alt="" />
-        </div>
-        <div class="events_item_body">
-          <a href="#" class="item_title">
-            <span> Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит” </span>
-            <svg class="w24 stroke_black">
-              <use
-                xlink:href="@/assets/imgs/sprite.symbol.svg#arrow_up_right"
-              ></use>
-            </svg>
-          </a>
-          <div class="events_item_text">
-            Дополнительная информация Дополнительная информация
-          </div>
-          <ul class="events_item_list">
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#location"
-                ></use>
-              </svg>
-              Свердловская обл, г Екатеринбург
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
-                ></use>
-              </svg>
-              20 января 2024
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
-              </svg>
-              19:00-21:30
-            </li>
-          </ul>
-        </div>
-        <div class="events_item_btns">
-          <a href="#" class="btn btn_small">Отказаться от участия</a>
-          <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
+          <a
+            :href="decodeURIComponent(userEvent.link)"
+            target="_blank"
+            class="btn btn_small btn_opacity"
+            >Подробнее</a
+          >
         </div>
       </div>
     </div>
@@ -206,15 +97,22 @@
 
 <script setup>
 import { ref } from "vue";
-const events = ref([
-  { title: "Все" },
-  { title: "Футбол" },
-  { title: "Хоккей" },
-  { title: "Другие спортивные мероприятия" },
-  { title: "Культурно-массовые мероприятия" },
-]);
+import { useLkData } from "@/stores/LkData";
+const LkDataStore = useLkData();
+const userEvents = LkDataStore.userEvents;
+const eventsTypesData = LkDataStore.allEventsTypres;
+console.log(userEvents);
+
+const eventsTypes = eventsTypesData.map((el) => ({
+  title: el.name,
+  code: el.code,
+}));
+eventsTypes.unshift({
+  title: "Все",
+  code: "all",
+});
 const selectedDate = ref("");
-const selectedEventType = ref(events.value[0].title);
+const selectedEventType = ref(eventsTypes[0]);
 
 const format = (date) => {
   let dateFrom = {
@@ -239,6 +137,27 @@ const format = (date) => {
 
   return `${dateFrom} - ${dateTo}`;
 };
+
+function dateForEvent(inputDate) {
+  const [month, day, year] = inputDate.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  return `${date.getDate()} ${
+    [
+      "января",
+      "февраля",
+      "марта",
+      "апреля",
+      "мая",
+      "июня",
+      "июля",
+      "августа",
+      "сентября",
+      "октября",
+      "ноября",
+      "декабря",
+    ][date.getMonth()]
+  } ${date.getFullYear()}`;
+}
 </script>
 
 <style lang="scss">

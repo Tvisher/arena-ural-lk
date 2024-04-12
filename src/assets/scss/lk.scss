@@ -16,7 +16,7 @@ $color_orange: #ef723b;
 
 .lk-user {
   position: sticky;
-  top: 0px;
+  top: 30px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -550,6 +550,7 @@ $color_orange: #ef723b;
       flex-direction: column;
     }
     .event-block__nameplates {
+      flex-wrap: wrap;
       order: -1;
       display: flex;
       flex-direction: row;

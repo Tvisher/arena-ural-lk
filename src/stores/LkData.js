@@ -7,6 +7,7 @@ const userId = document.querySelector('#lk-app').dataset.user;
 export const useLkData = defineStore("LkData", () => {
     // state refs
     const userData = ref({
+        userId: '',
         name: '',
         lastname: '',
         patronymic: '',
@@ -14,21 +15,24 @@ export const useLkData = defineStore("LkData", () => {
         email: '',
         birthday: '',
         fanID: '',
-        userId: '',
         userInfo: '',
         photo: '',
         socials: {
             ok: '',
             tg: '',
-            whatsupp: '',
+            whatsapp: '',
             vk: ''
         }
-    })
+    });
+    const userSubscribes = ref([]);
     // getters
     const allEvents = ref([])
+    const userEvents = ref([])
+    const allEventsTypres = ref([]);
 
     // Actions
     const setApplicationData = (data) => {
+        userData.value.userId = data.ID;
         userData.value.name = data.first_name;
         userData.value.lastname = data.last_name;
         userData.value.patronymic = data.patronymic;
@@ -36,15 +40,35 @@ export const useLkData = defineStore("LkData", () => {
         userData.value.email = data.user_email;
         userData.value.birthday = data.meta_birthday;
         userData.value.fanID = data.fanID;
-        userData.value.userId = data.ID;
         userData.value.photo = data.photo_url;
         userData.value.userInfo = data.user_bio;
         userData.value.socials.ok = data.ok;
         userData.value.socials.tg = data.telegram;
-        userData.value.socials.whatsupp = data.whatsupp;
+        userData.value.socials.whatsapp = data.whatsapp;
         userData.value.socials.vk = data.vk;
         allEvents.value = data.gigs;
-    }
+        allEventsTypres.value = data.sport;
+        userEvents.value = data.gigs.filter(el => el.hasOwnProperty('usergig'))
+        userSubscribes.value = Array.isArray(data.sport_user)
+            ? data.sport_user
+            : Object.values(data.sport_user);
+    };
+
+    const updateUserData = (data) => {
+        userData.value.name = data.name;
+        userData.value.lastname = data.lastname;
+        userData.value.patronymic = data.patronymic;
+        userData.value.phone = data.phone;
+        userData.value.email = data.email;
+        userData.value.birthday = data.birthday;
+        userData.value.fanID = data.fanID;
+        userData.value.userInfo = data.userInfo;
+        userData.value.photo = data.photo;
+        userData.value.socials.ok = data.socials.ok;
+        userData.value.socials.tg = data.socials.tg;
+        userData.value.socials.whatsapp = data.socials.whatsapp;
+        userData.value.socials.vk = data.socials.vk;
+    };
 
     const getAppData = async () => {
         return new Promise((resolve, reject) => {
@@ -69,9 +93,13 @@ export const useLkData = defineStore("LkData", () => {
     };
 
     return {
+        userSubscribes,
+        updateUserData,
         getAppData,
         userData,
-        allEvents
+        userEvents,
+        allEvents,
+        allEventsTypres
     }
 })
 

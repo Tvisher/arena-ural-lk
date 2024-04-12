@@ -52,6 +52,7 @@
       <div class="info-row__value socials-list">
         <a
           :href="userData.socials.ok"
+          target="_blank"
           class="social-item"
           v-if="userData.socials.ok"
         >
@@ -59,6 +60,7 @@
         </a>
         <a
           :href="userData.socials.tg"
+          target="_blank"
           class="social-item"
           v-if="userData.socials.tg"
         >
@@ -66,6 +68,7 @@
         </a>
         <a
           :href="userData.socials.whatsapp"
+          target="_blank"
           class="social-item"
           v-if="userData.socials.whatsapp"
         >
@@ -73,6 +76,7 @@
         </a>
         <a
           :href="userData.socials.vk"
+          target="_blank"
           class="social-item"
           v-if="userData.socials.vk"
         >

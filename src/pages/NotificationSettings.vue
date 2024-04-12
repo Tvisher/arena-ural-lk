@@ -4,71 +4,22 @@
     Выберите те категории уведемолений, которые вы хотите получать
   </div>
   <div class="categories_list">
-    <div class="categories_col">
-      <input type="checkbox" name="categories_type" value="1" checked="checked" />
+    <div class="categories_col" v-for="eventType in eventsTypes">
+      <input
+        type="checkbox"
+        :name="eventType.code"
+        :value="eventType.code"
+        :checked="isChecked(eventType.code)"
+        @change="toggleCheckbox(eventType.code)"
+      />
       <div class="categories_item">
         <div class="categories_item_icon">
-          <svg class="w16 fill_none stroke_none">
-            <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"></use>
-          </svg>
+          <img :src="eventType.img" alt="" />
         </div>
         <div>
-          <div class="categories_item_title">Футбол</div>
+          <div class="categories_item_title">{{ eventType.name }}</div>
           <div class="categories_item_text">
-            Все мероприятия, связанные с футбольными матчами и событиями.
-          </div>
-        </div>
-        <div class="categories_item_dot"></div>
-      </div>
-    </div>
-    <div class="categories_col">
-      <input type="checkbox" name="categories_type" value="1" />
-      <div class="categories_item">
-        <div class="categories_item_icon">
-          <svg class="w16 fill_none stroke_none">
-            <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_hockey"></use>
-          </svg>
-        </div>
-        <div>
-          <div class="categories_item_title">Хоккей</div>
-          <div class="categories_item_text">
-            Игры и мероприятия, связанные с хоккеем.
-          </div>
-        </div>
-        <div class="categories_item_dot"></div>
-      </div>
-    </div>
-    <div class="categories_col">
-      <input type="checkbox" name="categories_type" value="1" />
-      <div class="categories_item">
-        <div class="categories_item_icon">
-          <svg class="w16 fill_none stroke_none">
-            <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_sport"></use>
-          </svg>
-        </div>
-        <div>
-          <div class="categories_item_title">Другие спортивные мероприятия</div>
-          <div class="categories_item_text">
-            Мероприятия, связанные с другими видами спорта.
-          </div>
-        </div>
-        <div class="categories_item_dot"></div>
-      </div>
-    </div>
-    <div class="categories_col">
-      <input type="checkbox" name="categories_type" value="1" />
-      <div class="categories_item">
-        <div class="categories_item_icon">
-          <svg class="w16 fill_none stroke_none">
-            <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_cultural"></use>
-          </svg>
-        </div>
-        <div>
-          <div class="categories_item_title">
-            Культурно-массовые мероприятия
-          </div>
-          <div class="categories_item_text">
-            Фестивали, концерты, выставки и другие культурные события.
+            {{ eventType.description }}
           </div>
         </div>
         <div class="categories_item_dot"></div>
@@ -76,13 +27,63 @@
     </div>
   </div>
   <div class="events_item_btns">
-    <router-link class="btn btn_small btn_white" :to="{ name: 'TabItem', params: { tabId: 'notifications' } }">
+    <router-link
+      class="btn btn_small btn_white"
+      :to="{ name: 'TabItem', params: { tabId: 'notifications' } }"
+    >
       Назад
     </router-link>
-    <a href="javascript:void(0)" class="btn btn_small">Изменить</a>
+    <a href="javascript:void(0)" class="btn btn_small" @click="saveEdit"
+      >Изменить</a
+    >
   </div>
 </template>
-<script setup></script>
+<script setup>
+import axios from "axios";
+import { storeToRefs } from "pinia";
+import { ref } from "vue";
+import { useLkData } from "@/stores/LkData";
+const LkDataStore = useLkData();
+const eventsTypes = LkDataStore.allEventsTypres;
+
+const { userSubscribes } = storeToRefs(LkDataStore);
+const userSubscribesCopy = JSON.parse(JSON.stringify(userSubscribes.value));
+const selectedEventsTypes = ref(userSubscribesCopy);
+
+const isChecked = (value) => selectedEventsTypes.value.includes(value);
+
+const toggleCheckbox = (value) => {
+  const index = selectedEventsTypes.value.indexOf(value);
+  if (index !== -1) {
+    selectedEventsTypes.value.splice(index, 1);
+  } else {
+    selectedEventsTypes.value.push(value);
+  }
+};
+
+const saveEdit = () => {
+  const editedData = {
+    sport_user: selectedEventsTypes.value,
+    userId: LkDataStore.userData.userId,
+  };
+  axios
+    .post(
+      "/wp-content/themes/sp-theme-master/ajax/update_mess.php",
+      JSON.stringify(editedData)
+    )
+    .then((res) => {
+      console.log(res);
+      if (res.data) {
+        // e.target.classList.remove("sending");
+        // showModal.value = true;
+        // setTimeout(() => (showModal.value = false), 5000);
+      }
+    })
+    .catch((error) => {
+      console.log("Ошибка!!!", error);
+    });
+};
+</script>
 
 <style lang="scss" scoped>
 .categories_item_dot {

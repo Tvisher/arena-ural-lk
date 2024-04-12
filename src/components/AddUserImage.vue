@@ -10,7 +10,7 @@
       </div>
       <div class="uploaded_file">
         <div class="file-item">
-          <div class="file-name">{{ fileName }}</div>
+          <!-- <div class="file-name">{{ fileName }}</div> -->
           <button class="delete-file" @click="handleClickDeleteFile()">
             <svg
               width="16"
@@ -21,7 +21,7 @@
             >
               <path
                 d="M13.625 1.875H10.838L10.5333 0.961313C10.4401 0.681239 10.2611 0.437625 10.0217 0.265061C9.78223 0.0924975 9.4945 -0.000245665 9.19934 4.88728e-07H6.80066C6.50546 -0.000195446 6.2177 0.0925603 5.97818 0.265111C5.73867 0.437661 5.55957 0.681246 5.46628 0.961313L5.16194 1.875H2.375C1.59956 1.875 0.96875 2.50581 0.96875 3.28125V4.21875C0.96875 4.74088 1.43878 4.6875 1.94322 4.6875H14.5625C14.8216 4.6875 15.0312 4.47784 15.0312 4.21875V3.28125C15.0312 2.50581 14.4004 1.875 13.625 1.875ZM6.15041 1.875L6.35572 1.25794C6.38684 1.16457 6.44657 1.08337 6.52643 1.02585C6.60629 0.968337 6.70224 0.937425 6.80066 0.9375H9.19934C9.40122 0.9375 9.58022 1.06613 9.64384 1.25794L9.84937 1.875H6.15041ZM2.02081 5.6875L2.76822 14.721C2.83459 15.4502 3.43656 16 4.16853 16H11.8315C12.5635 16 13.1654 15.4502 13.2323 14.7169L13.9793 5.6875H2.02081ZM5.65625 13.6563C5.65625 14.2742 4.71875 14.2767 4.71875 13.6563V7.09375C4.71875 6.47584 5.65625 6.47331 5.65625 7.09375V13.6563ZM8.46875 13.6563C8.46875 14.2742 7.53125 14.2767 7.53125 13.6563V7.09375C7.53125 6.47584 8.46875 6.47331 8.46875 7.09375V13.6563ZM11.2812 13.6563C11.2812 14.2742 10.3438 14.2767 10.3438 13.6563V7.09375C10.3438 6.83466 10.5534 6.625 10.8125 6.625C11.0716 6.625 11.2812 6.83466 11.2812 7.09375V13.6563Z"
-                fill="#FA0056"
+                fill="#ef723b"
               />
             </svg>
           </button>
@@ -44,18 +44,17 @@
         </div>
         <div v-else>
           <div class="poll-dropzone__text">
-            <span style="color: #ef723b">Загрузить</span> или переносите
+            <span style="color: #ef723b">Загрузить</span> или перенести
             выбранное изображение <br />
-            SVG, PNG, JPG (максимум 800x400px)
-          </div>
-          <!-- <div class="poll-dropzone__descr">
-            Поддерживаемые форматы:
-            <span class="take-note">SVG, PNG, JPG</span>
+            PNG, JPG, JPEG, SVG
           </div>
           <div class="poll-dropzone__descr">
             Максималяный размер файла
-            <span class="take-note">{{ 10 }} МБ</span>
-          </div> -->
+            <span class="take-note">{{ 5 }} МБ</span>
+          </div>
+          <div class="poll-dropzone__descr" v-if="uploadError.length">
+            <span class="upload_err">{{ uploadError }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -67,77 +66,90 @@ import { ref, computed } from "vue";
 import { useDropzone } from "vue3-dropzone";
 import axios from "axios";
 let loading = ref(false);
+const props = defineProps(["imageUrl"]);
+const emit = defineEmits(["addImage"]);
+const hasUploadedImage = computed(() => {
+  return props.imageUrl.length;
+});
 
-// const hasUploadedImage = computed(() => {
-//   return Boolean(backgroundUrl.value.path);
-// });
+const uploadError = ref("");
 
 // const fileName = computed(() => {
 //   return backgroundUrl.value.name;
 // });
 
-// const filePath = computed(() => {
-//   if (hasUploadedImage) {
-//     return backgroundUrl.value.path;
-//   }
-// });
+const filePath = computed(() => {
+  if (hasUploadedImage) {
+    return props.imageUrl;
+  }
+});
 
-// const addImageinPoll = (newImageData) => {
-//   backgroundUrl.value = newImageData;
-// };
+const addUserImage = (newImageData) => {
+  // backgroundUrl.value = newImageData;
+  emit("addImage", newImageData);
+};
 
 function handleClickDeleteFile() {
-  // addImageinPoll({});
-  // return;
+  emit("addImage", "");
+  return;
 }
 
 function onDrop(acceptFile, errors) {
-  // if (errors.length > 0) {
-  //   console.log(errors);
-  //   return;
-  // }
-  // saveFiles(acceptFile);
+  if (errors.length > 0) {
+    const errCode = errors[0].errors[0].code;
+    if (errCode === "file-invalid-type") {
+      uploadError.value = "Не верный тип файла";
+    }
+    if (errCode === "file-too-large") {
+      uploadError.value = "Файл слишком большой";
+    }
+    return;
+  }
+  uploadError.value = "";
+  saveFiles(acceptFile);
 }
 
-// const saveFiles = (acceptFile) => {
-//   const formData = new FormData();
-//   formData.append("gameword", acceptFile[0]);
-//   loading.value = true;
-//   axios({
-//     method: "post",
-//     url: "/local/templates/gameword/files.php",
-//     data: formData,
-//     headers: { "Content-Type": "multipart/form-data" },
-//   })
-//     .then((response) => {
-//       const newFileData = response.data.fileInfo;
-//       addImageinPoll(newFileData);
-//       loading.value = false;
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       const newFileData = {
-//         name: "ImageTemplate",
-//         path: "https://png.pngtree.com/thumb_back/fw800/background/20230610/pngtree-picture-of-a-blue-bird-on-a-black-background-image_2937385.jpg",
-//       };
-//       setTimeout(() => {
-//         addImageinPoll(newFileData);
-//         loading.value = false;
-//       }, 2000);
-//     });
-// };
+const saveFiles = (acceptFile) => {
+  const formData = new FormData();
+  formData.append("file", acceptFile[0]);
+  loading.value = true;
+  axios({
+    method: "post",
+    url: "/wp-content/themes/sp-theme-master/ajax/user_avatar.php",
+    data: formData,
+    headers: { "Content-Type": "multipart/form-data" },
+  })
+    .then((response) => {
+      console.log(response.data.url[0]);
+      const newFilePath = response.data.url[0];
+      addUserImage(newFilePath);
+      loading.value = false;
+    })
+    .catch((err) => {
+      console.error(err);
+      const newFileData =
+        "https://png.pngtree.com/thumb_back/fw800/background/20230610/pngtree-picture-of-a-blue-bird-on-a-black-background-image_2937385.jpg";
+      setTimeout(() => {
+        addUserImage(newFileData);
+        loading.value = false;
+      }, 2000);
+    });
+};
 
 const options = {
   multiple: false,
-  maxSize: Number(10) * 1000000,
+  maxSize: Number(1) * 1000000,
   onDrop,
-  accept: [".jpg", ".jpeg", ".png"],
+  accept: [".jpg", ".jpeg", ".png", ".svg"],
 };
 
 const { getRootProps, getInputProps, ...rest } = useDropzone(options);
 </script>
 
 <style lang="scss">
+.upload_err {
+  color: red;
+}
 .dropzone-wrapper.uploading {
   pointer-events: none;
 }
@@ -227,7 +239,8 @@ const { getRootProps, getInputProps, ...rest } = useDropzone(options);
   border: none;
   cursor: pointer;
   padding: 0;
-  margin-left: 10px;
+  // margin-left: 10px;
+  margin-top: 10px;
   background-color: transparent;
   width: 24px;
   height: 24px;
@@ -252,6 +265,7 @@ const { getRootProps, getInputProps, ...rest } = useDropzone(options);
   position: relative;
   transform: rotate(45deg);
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 .loader::before {
   content: "";
@@ -259,7 +273,7 @@ const { getRootProps, getInputProps, ...rest } = useDropzone(options);
   box-sizing: border-box;
   inset: -10px;
   border-radius: 50%;
-  border: 10px solid red;
+  border: 10px solid #ef723b;
   animation: prixClipFix 2s infinite linear;
 }
 

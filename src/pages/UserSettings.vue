@@ -229,13 +229,16 @@
             name="name"
             placeholder=""
             class="form_input"
-            v-model.trim="userSettingsData.socials.whatsupp"
+            v-model.trim="userSettingsData.socials.whatsapp"
           />
         </span>
       </label>
     </div>
     <hr />
-    <AddUserImage />
+    <AddUserImage
+      :imageUrl="userSettingsData.photo"
+      @addImage="addUserImage($event)"
+    />
     <div class="form_input_row one-col">
       <label class="form_input_group">
         <span class="form_input_name">О себе</span>
@@ -280,20 +283,31 @@
       </div>
     </div>
   </form>
+  <transition name="fade">
+    <BottomModal
+      :title="'Данные личного кабинета успешно обновлены'"
+      v-if="showModal"
+      @closeModal="showModal = false"
+    />
+  </transition>
 </template>
-<style></style>
+
 <script setup>
 import { ref, nextTick } from "vue";
 import AddUserImage from "@/components/AddUserImage.vue";
 import { useIMask } from "vue-imask";
+import axios from "axios";
+import BottomModal from "@/components/BottomModal.vue";
 
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
 const userData = LkDataStore.userData;
-
+const updateUserData = LkDataStore.updateUserData;
 const checkValidate = ref(false);
+const showModal = ref(false);
 
 const userSettingsData = ref({
+  id: userData.userId,
   name: userData.name,
   lastname: userData.lastname,
   patronymic: userData.patronymic,
@@ -306,11 +320,14 @@ const userSettingsData = ref({
   socials: {
     ok: userData.socials.ok,
     tg: userData.socials.tg,
-    whatsupp: userData.socials.whatsupp,
+    whatsapp: userData.socials.whatsapp,
     vk: userData.socials.vk,
   },
 });
 
+const addUserImage = (imageUrl) => {
+  userSettingsData.value.photo = imageUrl;
+};
 const dateFormat = (date) => {
   const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
   const month =
@@ -319,7 +336,10 @@ const dateFormat = (date) => {
   return `${day}.${month}.${year}`;
 };
 
-const saveEdit = () => {
+const saveEdit = (e) => {
+  const targetBtn = e.target.closest(".btn");
+  if (targetBtn.classList.contains("sending")) return;
+  targetBtn.classList.add("sending");
   checkValidate.value = true;
   nextTick(() => {
     const err = document.querySelector(".user-settings-form .error");
@@ -327,7 +347,23 @@ const saveEdit = () => {
       err.scrollIntoView({ block: "center", behavior: "smooth" });
       return;
     }
-    console.log(userSettingsData.value);
+    const updatedData = JSON.stringify(userSettingsData.value);
+    axios
+      .post(
+        "/wp-content/themes/sp-theme-master/ajax/cabinet_update.php",
+        updatedData
+      )
+      .then((res) => {
+        if (res.data) {
+          e.target.classList.remove("sending");
+          updateUserData(userSettingsData.value);
+          showModal.value = true;
+          setTimeout(() => (showModal.value = false), 5000);
+        }
+      })
+      .catch((error) => {
+        console.log("Ошибка!!!", error);
+      });
   });
 };
 
@@ -344,6 +380,8 @@ function isEmailValid(value) {
 
 <style lang="scss">
 .user-settings-form {
+  position: relative;
+  z-index: 4;
   .dp__clear_icon {
     display: none;
   }

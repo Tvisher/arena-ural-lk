@@ -2,7 +2,7 @@
   <div class="bottom-modal">
     <div class="container">
       <div class="bottom-modal__content">
-        <div class="bottom-modal__close">
+        <div class="bottom-modal__close" @click="emit('closeModal')">
           <svg
             width="24"
             height="24"
@@ -19,7 +19,7 @@
             />
           </svg>
         </div>
-        <div class="bottom-modal__ico"></div>
+        <div class="bottom-modal__ico" :class="{ reject: !props.status }"></div>
         <div class="bottom-modal__text" v-html="props.title"></div>
       </div>
     </div>
@@ -27,15 +27,23 @@
 </template>
 
 <script setup>
-const props = defineProps(["title"]);
+const props = defineProps({
+  title: String,
+  status: {
+    type: Boolean,
+    default: true,
+  },
+});
+const emit = defineEmits(["closeModal"]);
 </script>
 
 <style lang="scss">
 .bottom-modal {
   position: fixed;
-  bottom: 20px;
+  bottom: 80px;
   left: 0px;
   width: 100%;
+  z-index: 3;
 }
 
 .bottom-modal__content {
@@ -80,6 +88,9 @@ const props = defineProps(["title"]);
   border-radius: 50%;
   // border: 8px solid #ecfdf3;
   margin-bottom: 20px;
+  &.reject {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='56' height='56' viewBox='0 0 56 56' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect x='4' y='4' width='48' height='48' rx='24' fill='%23FFD3C1'/%3e%3crect x='4' y='4' width='48' height='48' rx='24' stroke='%23FFF5F1' stroke-width='8'/%3e%3cpath d='M31 25L25 31M25 25L31 31M38 28C38 33.5228 33.5228 38 28 38C22.4772 38 18 33.5228 18 28C18 22.4772 22.4772 18 28 18C33.5228 18 38 22.4772 38 28Z' stroke='%23EF723B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e ");
+  }
 }
 
 @media (max-width: 1440px) {

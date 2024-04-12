@@ -17,12 +17,12 @@
     <div
       class="event-block"
       v-for="eventItem in currentDayEvents"
-      :key="eventItem.id"
+      :key="eventItem.ID"
     >
       <div class="event-block__wrapper">
         <div class="event-block__info">
           <div class="event-block__title">
-            {{ eventItem.post_title }}
+            {{ eventItem.post_title }} id:{{ eventItem.ID }}
           </div>
           <div class="event-block__descr" v-html="eventItem.post_content"></div>
           <ul class="events_item_list">
@@ -49,16 +49,6 @@
               {{ eventItem.start }}{{ ` - ${eventItem.end}` }}
             </li>
           </ul>
-          <div class="events_item_btns">
-            <a href="#" class="btn btn_small" v-if="eventItem.status.value == 1"
-              >Подать заявку</a
-            ><a
-              :href="decodeURIComponent(eventItem.link)"
-              target="_blank"
-              class="btn btn_small btn_opacity"
-              >Подробнее</a
-            >
-          </div>
         </div>
         <div class="event-block__nameplates">
           <div class="label label_cat">
@@ -68,47 +58,82 @@
               ></use>
             </svg>
             <span>{{ eventItem.type.label }}</span>
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_cultural"></use>
-            </svg> -->
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_hockey"></use>
-            </svg> -->
-            <!-- <svg class="w24 fill_none">
-              <use xlink:href="@/assets/imgs/sprite.symbol.svg#category_sport"></use>
-            </svg> -->
           </div>
           <div class="label label_text">{{ eventItem.status.label }}</div>
         </div>
       </div>
+      <div class="events_item_btns">
+        <a
+          href="#"
+          class="btn btn_small"
+          v-if="eventItem.status.value == 1 && !isHasInUserEvents(eventItem.ID)"
+          @click="applyForEvent($event, eventItem.ID)"
+        >
+          Подать заявку
+        </a>
+
+        <a
+          href="#"
+          class="btn btn_small"
+          v-if="isHasInUserEvents(eventItem.ID)"
+        >
+          Отказаться от участия
+        </a>
+        <a
+          :href="decodeURIComponent(eventItem.link)"
+          target="_blank"
+          class="btn btn_small btn_opacity"
+          >Подробнее</a
+        >
+      </div>
+      {{ eventItem.date_mess }}
     </div>
   </div>
   <h2 v-else class="events-empty">
     {{ dateForEvent(selectedDate) }} мероприятий нет
   </h2>
+
+  <transition name="fade">
+    <BottomModal
+      :title="modalMessage"
+      :status="modalStatus"
+      v-if="showModal"
+      @closeModal="showModal = false"
+    />
+  </transition>
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
-// import addDays from "date-fns/addDays";
-
+import axios from "axios";
+import BottomModal from "@/components/BottomModal.vue";
+import { storeToRefs } from "pinia";
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
+const { userEvents } = storeToRefs(LkDataStore);
 const allEvents = LkDataStore.allEvents;
 
 const daysHasEventsArr = [...new Set(allEvents.map((eventEl) => eventEl.date))];
 const selectedDate = ref(formatDate(new Date()));
 const isMultiCalendar = ref("");
 const highlightedDates = ref(daysHasEventsArr);
-
+const modalMessage = ref("");
+const showModal = ref(false);
+const modalStatus = ref(null);
 const currentDayEvents = computed(() =>
   allEvents.filter((eventEl) => eventEl.date === selectedDate.value)
 );
-
 const currentDayHasEvents = computed(() => currentDayEvents.value.length > 0);
 
 const handleDate = (modelData) => {
   selectedDate.value = formatDate(modelData);
 };
+
+const isHasInUserEvents = (id) => {
+  return userEvents.value.filter((el) => {
+    return el.ID == id && el.hasOwnProperty("usergig");
+  }).length;
+};
+
 // Функция для определения текущего разрешения экрана
 const updateResolution = () => {
   if (window.matchMedia("(max-width: 768px)").matches) {
@@ -116,6 +141,40 @@ const updateResolution = () => {
   } else {
     isMultiCalendar.value = true;
   }
+};
+
+const applyForEvent = (e, eventid) => {
+  e.preventDefault();
+  const target = e.target;
+  if (target.classList.contains("sending")) return;
+  target.classList.add("sending");
+  const postData = {
+    eventId: String(eventid),
+    user: LkDataStore.userData.userId,
+  };
+
+  axios
+    .post(
+      "/wp-content/themes/sp-theme-master/ajax/zayv_user.php",
+      JSON.stringify(postData)
+    )
+    .then((res) => {
+      console.log(res.data);
+      target.classList.remove("sending");
+      modalMessage.value = res.data.message;
+      modalStatus.value = res.data.status;
+      showModal.value = true;
+      if (res.data.status == true) {
+        const currentEvent = allEvents.find((el) => el.ID == eventid);
+        currentEvent.usergig = "y";
+        userEvents.value.push(currentEvent);
+      }
+
+      setTimeout(() => (showModal.value = false), 5000);
+    })
+    .catch((error) => {
+      console.log("Ошибка!!!", error);
+    });
 };
 
 // Вызываем функцию при монтировании компонента и добавляем обработчик изменения размера окна
