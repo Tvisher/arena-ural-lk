@@ -22,10 +22,8 @@
       </div>
     </div>
   </transition>
-  <!-- <BottomModal :title="'Текст модального окна, может быть любой'" /> -->
 </template>
 <script setup>
-import BottomModal from "@/components/BottomModal.vue";
 import { ref, onMounted, computed } from "vue";
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();

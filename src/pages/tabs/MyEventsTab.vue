@@ -36,11 +36,11 @@
     <div class="events_col" v-for="userEvent in userEvents" :key="userEvent.ID">
       <div class="events_item">
         <div class="label label_cat">
-          <svg class="w24 fill_none">
+          <!-- <svg class="w24 fill_none">
             <use
               xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
             ></use>
-          </svg>
+          </svg> -->
         </div>
         <div class="label label_text">{{ userEvent.status.label }}</div>
         <div class="item_img">
@@ -82,7 +82,12 @@
           </ul>
         </div>
         <div class="events_item_btns">
-          <a href="#" class="btn btn_small">Отказаться от участия</a>
+          <a
+            href="#"
+            class="btn btn_small"
+            @click="showUnsubscribeModal($event, userEvent.ID)"
+            >Отказаться от участия</a
+          >
           <a
             :href="decodeURIComponent(userEvent.link)"
             target="_blank"
@@ -93,15 +98,39 @@
       </div>
     </div>
   </div>
+  <transition name="fade">
+    <UnsubscribeModal
+      v-if="unsubscribeModalData.show"
+      :eventData="unsubscribeModalData.eventData"
+      @closeModal="closeUnsubscribeModal"
+    />
+  </transition>
 </template>
 
 <script setup>
+import UnsubscribeModal from "@/components/UnsubscribeModal.vue";
+
 import { ref } from "vue";
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
 const userEvents = LkDataStore.userEvents;
 const eventsTypesData = LkDataStore.allEventsTypres;
-console.log(userEvents);
+const unsubscribeModalData = ref({
+  show: false,
+  eventData: null,
+});
+
+const showUnsubscribeModal = (e, eventItemId) => {
+  e.preventDefault();
+  console.log(userEvents);
+  const currentEvent = userEvents.find((el) => el.ID == eventItemId);
+  unsubscribeModalData.value.eventData = currentEvent;
+  unsubscribeModalData.value.show = true;
+};
+
+const closeUnsubscribeModal = () => {
+  unsubscribeModalData.value.show = false;
+};
 
 const eventsTypes = eventsTypesData.map((el) => ({
   title: el.name,

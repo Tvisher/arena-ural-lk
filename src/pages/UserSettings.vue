@@ -339,7 +339,6 @@ const dateFormat = (date) => {
 const saveEdit = (e) => {
   const targetBtn = e.target.closest(".btn");
   if (targetBtn.classList.contains("sending")) return;
-  targetBtn.classList.add("sending");
   checkValidate.value = true;
   nextTick(() => {
     const err = document.querySelector(".user-settings-form .error");
@@ -347,6 +346,7 @@ const saveEdit = (e) => {
       err.scrollIntoView({ block: "center", behavior: "smooth" });
       return;
     }
+    targetBtn.classList.add("sending");
     const updatedData = JSON.stringify(userSettingsData.value);
     axios
       .post(
@@ -356,6 +356,7 @@ const saveEdit = (e) => {
       .then((res) => {
         if (res.data) {
           e.target.classList.remove("sending");
+          checkValidate.value = false;
           updateUserData(userSettingsData.value);
           showModal.value = true;
           setTimeout(() => (showModal.value = false), 5000);

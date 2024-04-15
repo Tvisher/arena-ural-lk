@@ -26,8 +26,10 @@ export const useLkData = defineStore("LkData", () => {
     });
     const userSubscribes = ref([]);
     // getters
-    const allEvents = ref([])
-    const userEvents = ref([])
+    const allEvents = ref([]);
+    const userEvents = ref([]);
+    const userEventsArchive = ref([]);
+
     const allEventsTypres = ref([]);
 
     // Actions
@@ -48,7 +50,8 @@ export const useLkData = defineStore("LkData", () => {
         userData.value.socials.vk = data.vk;
         allEvents.value = data.gigs;
         allEventsTypres.value = data.sport;
-        userEvents.value = data.gigs.filter(el => el.hasOwnProperty('usergig'))
+        userEvents.value = data.gigs.filter(el => el.hasOwnProperty('usergig') && el.status.value == 1);
+        userEventsArchive.value = data.gigs.filter(el => el.hasOwnProperty('usergig') && el.status.value == 2);
         userSubscribes.value = Array.isArray(data.sport_user)
             ? data.sport_user
             : Object.values(data.sport_user);
@@ -99,7 +102,8 @@ export const useLkData = defineStore("LkData", () => {
         userData,
         userEvents,
         allEvents,
-        allEventsTypres
+        allEventsTypres,
+        userEventsArchive
     }
 })
 

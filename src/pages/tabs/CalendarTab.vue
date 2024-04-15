@@ -18,11 +18,12 @@
       class="event-block"
       v-for="eventItem in currentDayEvents"
       :key="eventItem.ID"
+      :data-id="eventItem.ID"
     >
       <div class="event-block__wrapper">
         <div class="event-block__info">
           <div class="event-block__title">
-            {{ eventItem.post_title }} id:{{ eventItem.ID }}
+            {{ eventItem.post_title }}
           </div>
           <div class="event-block__descr" v-html="eventItem.post_content"></div>
           <ul class="events_item_list">
@@ -52,11 +53,11 @@
         </div>
         <div class="event-block__nameplates">
           <div class="label label_cat">
-            <svg class="w24 fill_none">
+            <!-- <svg class="w24 fill_none">
               <use
                 xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
               ></use>
-            </svg>
+            </svg> -->
             <span>{{ eventItem.type.label }}</span>
           </div>
           <div class="label label_text">{{ eventItem.status.label }}</div>
@@ -75,7 +76,8 @@
         <a
           href="#"
           class="btn btn_small"
-          v-if="isHasInUserEvents(eventItem.ID)"
+          v-if="isHasInUserEvents(eventItem.ID) && eventItem.status.value == 1"
+          @click="showUnsubscribeModal($event, eventItem.ID)"
         >
           Отказаться от участия
         </a>
@@ -86,7 +88,6 @@
           >Подробнее</a
         >
       </div>
-      {{ eventItem.date_mess }}
     </div>
   </div>
   <h2 v-else class="events-empty">
@@ -101,11 +102,21 @@
       @closeModal="showModal = false"
     />
   </transition>
+
+  <transition name="fade">
+    <UnsubscribeModal
+      v-if="unsubscribeModalData.show"
+      :eventData="unsubscribeModalData.eventData"
+      @closeModal="closeUnsubscribeModal"
+    />
+  </transition>
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
 import BottomModal from "@/components/BottomModal.vue";
+import UnsubscribeModal from "@/components/UnsubscribeModal.vue";
+
 import { storeToRefs } from "pinia";
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
@@ -119,6 +130,12 @@ const highlightedDates = ref(daysHasEventsArr);
 const modalMessage = ref("");
 const showModal = ref(false);
 const modalStatus = ref(null);
+
+const unsubscribeModalData = ref({
+  show: false,
+  eventData: null,
+});
+
 const currentDayEvents = computed(() =>
   allEvents.filter((eventEl) => eventEl.date === selectedDate.value)
 );
@@ -126,6 +143,17 @@ const currentDayHasEvents = computed(() => currentDayEvents.value.length > 0);
 
 const handleDate = (modelData) => {
   selectedDate.value = formatDate(modelData);
+};
+
+const showUnsubscribeModal = (e, eventItemId) => {
+  e.preventDefault();
+  const currentEvent = allEvents.find((el) => el.ID == eventItemId);
+  unsubscribeModalData.value.eventData = currentEvent;
+  unsubscribeModalData.value.show = true;
+};
+
+const closeUnsubscribeModal = () => {
+  unsubscribeModalData.value.show = false;
 };
 
 const isHasInUserEvents = (id) => {

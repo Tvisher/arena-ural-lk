@@ -63,9 +63,16 @@
           "label": "Идет набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Зуева Алёна Алексеевна",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "+79019493074",
+          "email": ""
+        },
         "title": "ФК Урал &#8211; 2",
         "link": "https://arena-ural.ru/gig/%d1%84%d0%ba-%d1%83%d1%80%d0%b0%d0%bb-2-3/",
-        "date": "04-26-2024"
+        "date": "04-26-2024",
+        "date_mess": true
       },
       {
         "ID": 229,
@@ -106,9 +113,16 @@
           "label": "Идет набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Зуева Алёна Алексеевна",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "+79019493074",
+          "email": ""
+        },
         "title": "ФК Урал &#8211; 2",
         "link": "https://arena-ural.ru/gig/%d1%84%d0%ba-%d1%83%d1%80%d0%b0%d0%bb-2-2/",
-        "date": "04-20-2024"
+        "date": "04-20-2024",
+        "date_mess": true
       },
       {
         "ID": 227,
@@ -135,6 +149,7 @@
         "post_mime_type": "",
         "comment_count": "0",
         "filter": "raw",
+        "usergig": "y",
         "type": {
           "value": "other",
           "label": "Другие спортивные мероприятия"
@@ -144,13 +159,20 @@
         "start": "10:00",
         "end": "15:00",
         "status": {
-          "value": "1",
-          "label": "Идет набор"
+          "value": "2",
+          "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Зуева Алёна Алексеевна",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "+79019493074",
+          "email": ""
+        },
         "title": "Юплей",
         "link": "https://arena-ural.ru/gig/%d1%8e%d0%bf%d0%bb%d0%b5%d0%b9/",
-        "date": "04-14-2024"
+        "date": "04-14-2024",
+        "date_mess": false
       },
       {
         "ID": 223,
@@ -187,13 +209,20 @@
         "start": "11:00",
         "end": "16:00",
         "status": {
-          "value": "1",
-          "label": "Идет набор"
+          "value": "2",
+          "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Зуева Алёна Алексеевна",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "+79019493074",
+          "email": ""
+        },
         "title": "ФК Урал &#8211; 2 (13 апреля)",
         "link": "https://arena-ural.ru/gig/%d1%84%d0%ba-%d1%83%d1%80%d0%b0%d0%bb-2/",
-        "date": "04-13-2024"
+        "date": "04-13-2024",
+        "date_mess": false
       },
       {
         "ID": 225,
@@ -229,13 +258,20 @@
         "start": "09:00",
         "end": "18:00",
         "status": {
-          "value": "1",
-          "label": "Идет набор"
+          "value": "2",
+          "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Зуева Алёна Алексеевна",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "+79019493074",
+          "email": ""
+        },
         "title": "Академия ФК &#8220;Урал&#8221;",
         "link": "https://arena-ural.ru/gig/%d0%b0%d0%ba%d0%b0%d0%b4%d0%b5%d0%bc%d0%b8%d1%8f-%d1%84%d0%ba-%d1%83%d1%80%d0%b0%d0%bb/",
-        "date": "04-13-2024"
+        "date": "04-13-2024",
+        "date_mess": false
       },
       {
         "ID": 220,
@@ -275,9 +311,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Зуева Алёна Алексеевна",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "+79019493074",
+          "email": ""
+        },
         "title": "ФК Урал &#8211; М",
         "link": "https://arena-ural.ru/gig/%d1%84%d0%ba-%d1%83%d1%80%d0%b0%d0%bb-%d0%bc-2/",
-        "date": "04-12-2024"
+        "date": "04-12-2024",
+        "date_mess": false
       },
       {
         "ID": 91,
@@ -317,9 +360,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Петров",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "77777777",
+          "email": "lkjlkj@dddd.ru"
+        },
         "title": "Федеральная юношеская футбольная лига (ФЮФЛ)",
         "link": "https://arena-ural.ru/gig/%d1%84%d0%b5%d0%b4%d0%b5%d1%80%d0%b0%d0%bb%d1%8c%d0%bd%d0%b0%d1%8f-%d1%8e%d0%bd%d0%be%d1%88%d0%b5%d1%81%d0%ba%d0%b0%d1%8f-%d1%84%d1%83%d1%82%d0%b1%d0%be%d0%bb%d1%8c%d0%bd%d0%b0%d1%8f-%d0%bb%d0%b8/",
-        "date": "03-31-2024"
+        "date": "03-31-2024",
+        "date_mess": false
       },
       {
         "ID": 90,
@@ -359,9 +409,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Петров",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "77777777",
+          "email": "lkjlkj@dddd.ru"
+        },
         "title": "ХК &#8220;Автомобилист&#8221; &#8211; ХК &#8220;СКА&#8221;",
         "link": "https://arena-ural.ru/gig/%d1%85%d0%ba-%d0%b0%d0%b2%d1%82%d0%be%d0%bc%d0%be%d0%b1%d0%b8%d0%bb%d0%b8%d1%81%d1%82-%d1%85%d0%ba-%d1%81%d0%ba%d0%b0-2/",
-        "date": "03-23-2024"
+        "date": "03-23-2024",
+        "date_mess": false
       },
       {
         "ID": 88,
@@ -401,9 +458,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Зуева Алёна Алексеевна",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "+79019493074",
+          "email": ""
+        },
         "title": "ХК &#8220;Автомобилист&#8221; &#8211; ХК &#8220;СКА&#8221;",
         "link": "https://arena-ural.ru/gig/%d1%85%d0%ba-%d0%b0%d0%b2%d1%82%d0%be%d0%bc%d0%be%d0%b1%d0%b8%d0%bb%d0%b8%d1%81%d1%82-%d1%85%d0%ba-%d1%81%d0%ba%d0%b0/",
-        "date": "03-21-2024"
+        "date": "03-21-2024",
+        "date_mess": false
       },
       {
         "ID": 87,
@@ -443,9 +507,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ГАУ СО ЦСП (Плавание)",
         "link": "https://arena-ural.ru/gig/%d0%b3%d0%b0%d1%83-%d1%81%d0%be-%d1%86%d1%81%d0%bf-%d0%bf%d0%bb%d0%b0%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5-2/",
-        "date": "03-15-2024"
+        "date": "03-15-2024",
+        "date_mess": false
       },
       {
         "ID": 84,
@@ -485,9 +556,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ПБК &#8220;Уралмаш&#8221;",
         "link": "https://arena-ural.ru/gig/%d0%bf%d0%b1%d0%ba-%d1%83%d1%80%d0%b0%d0%bb%d0%bc%d0%b0%d1%88-4/",
-        "date": "03-14-2024"
+        "date": "03-14-2024",
+        "date_mess": false
       },
       {
         "ID": 85,
@@ -527,9 +605,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ООО &#8220;НЕБО РЕКОРДС&#8221; Егор Крид",
         "link": "https://arena-ural.ru/gig/%d0%be%d0%be%d0%be-%d0%bd%d0%b5%d0%b1%d0%be-%d1%80%d0%b5%d0%ba%d0%be%d1%80%d0%b4%d1%81-%d0%b5%d0%b3%d0%be%d1%80-%d0%ba%d1%80%d0%b8%d0%b4/",
-        "date": "03-14-2024"
+        "date": "03-14-2024",
+        "date_mess": false
       },
       {
         "ID": 86,
@@ -569,9 +654,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ГАУ СО ЦСП (Плавание)",
         "link": "https://arena-ural.ru/gig/%d0%b3%d0%b0%d1%83-%d1%81%d0%be-%d1%86%d1%81%d0%bf-%d0%bf%d0%bb%d0%b0%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5/",
-        "date": "03-14-2024"
+        "date": "03-14-2024",
+        "date_mess": false
       },
       {
         "ID": 83,
@@ -611,9 +703,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ПБК &#8220;Уралмаш&#8221;",
         "link": "https://arena-ural.ru/gig/%d0%bf%d0%b1%d0%ba-%d1%83%d1%80%d0%b0%d0%bb%d0%bc%d0%b0%d1%88-3/",
-        "date": "03-13-2024"
+        "date": "03-13-2024",
+        "date_mess": false
       },
       {
         "ID": 80,
@@ -653,9 +752,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ПБК &#8220;Уралмаш&#8221;",
         "link": "https://arena-ural.ru/gig/%d0%bf%d0%b1%d0%ba-%d1%83%d1%80%d0%b0%d0%bb%d0%bc%d0%b0%d1%88-2/",
-        "date": "03-12-2024"
+        "date": "03-12-2024",
+        "date_mess": false
       },
       {
         "ID": 78,
@@ -695,9 +801,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ВК &#8220;Локо &#8211; Изумруд&#8221;",
         "link": "https://arena-ural.ru/gig/%d0%b2%d0%ba-%d0%bb%d0%be%d0%ba%d0%be-%d0%b8%d0%b7%d1%83%d0%bc%d1%80%d1%83%d0%b4-2/",
-        "date": "03-10-2024"
+        "date": "03-10-2024",
+        "date_mess": false
       },
       {
         "ID": 41,
@@ -737,9 +850,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "МФК &#8220;ВИЗ Синара&#8221;",
         "link": "https://arena-ural.ru/gig/enter1/",
-        "date": "03-09-2024"
+        "date": "03-09-2024",
+        "date_mess": false
       },
       {
         "ID": 77,
@@ -779,9 +899,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ВК &#8220;Локо &#8211; Изумруд&#8221;",
         "link": "https://arena-ural.ru/gig/%d0%b2%d0%ba-%d0%bb%d0%be%d0%ba%d0%be-%d0%b8%d0%b7%d1%83%d0%bc%d1%80%d1%83%d0%b4/",
-        "date": "03-09-2024"
+        "date": "03-09-2024",
+        "date_mess": false
       },
       {
         "ID": 79,
@@ -821,9 +948,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ФК Урал &#8211; ФК Зенит",
         "link": "https://arena-ural.ru/gig/%d1%84%d0%ba-%d1%83%d1%80%d0%b0%d0%bb-%d1%84%d0%ba-%d0%b7%d0%b5%d0%bd%d0%b8%d1%82/",
-        "date": "03-09-2024"
+        "date": "03-09-2024",
+        "date_mess": false
       },
       {
         "ID": 76,
@@ -863,9 +997,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ФК Урал &#8211; М",
         "link": "https://arena-ural.ru/gig/%d1%84%d0%ba-%d1%83%d1%80%d0%b0%d0%bb-%d0%bc/",
-        "date": "03-08-2024"
+        "date": "03-08-2024",
+        "date_mess": false
       },
       {
         "ID": 186,
@@ -905,9 +1046,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": "Петров",
+          "photo": "https://arena-ural.ru/wp-content/uploads/2024/03/6602bb777743e.png",
+          "phone": "77777777",
+          "email": "lkjlkj@dddd.ru"
+        },
         "title": "МФК &#8220;ВИЗ Синара&#8221;",
         "link": "https://arena-ural.ru/gig/%d0%bc%d1%84%d0%ba-%d0%b2%d0%b8%d0%b7-%d1%81%d0%b8%d0%bd%d0%b0%d1%80%d0%b0/",
-        "date": "03-08-2024"
+        "date": "03-08-2024",
+        "date_mess": false
       },
       {
         "ID": 45,
@@ -947,9 +1095,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ЦСМ (Футбол Деских домов) ЮФЛ",
         "link": "https://arena-ural.ru/gig/%d0%bc%d0%b8%d1%80-%d1%87%d0%b5%d0%bc%d0%bf%d0%b8%d0%be%d0%bd%d0%b0%d1%82-%d1%80%d0%bf%d0%bb-%d1%84%d0%ba-%d1%81%d0%b0%d1%80%d0%b0%d1%82%d0%be%d0%b2-%d1%84%d0%ba-%d0%b7/",
-        "date": "03-06-2024"
+        "date": "03-06-2024",
+        "date_mess": false
       },
       {
         "ID": 48,
@@ -989,9 +1144,16 @@
           "label": "Закрыт набор"
         },
         "anons": "",
+        "admin": {
+          "fio": null,
+          "photo": null,
+          "phone": null,
+          "email": null
+        },
         "title": "ПБК &#8220;Уралмаш&#8221;",
         "link": "https://arena-ural.ru/gig/%d0%bf%d0%b1%d0%ba-%d1%83%d1%80%d0%b0%d0%bb%d0%bc%d0%b0%d1%88/",
-        "date": "03-06-2024"
+        "date": "03-06-2024",
+        "date_mess": false
       }
     ],
     "sport": [

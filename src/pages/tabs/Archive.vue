@@ -1,29 +1,30 @@
 <template>
   <div class="events_list">
-    <div class="events_col">
+    <div class="events_col" v-for="archiveEvent in userEventsArchive">
       <div class="events_item">
         <div class="label label_cat">
-          <svg class="w24 fill_none">
+          <!-- <svg class="w24 fill_none">
             <use
               xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
             ></use>
-          </svg>
+          </svg> -->
         </div>
         <div class="item_img">
-          <img src="@/assets/imgs/events_img.png" alt="" />
+          <img :src="archiveEvent.img" alt="" />
         </div>
         <div class="events_item_body">
           <a href="#" class="item_title">
-            <span> Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит” </span>
+            <span> {{ archiveEvent.post_title }}</span>
             <svg class="w24 stroke_black">
               <use
                 xlink:href="@/assets/imgs/sprite.symbol.svg#arrow_up_right"
               ></use>
             </svg>
           </a>
-          <div class="events_item_text">
-            Дополнительная информация Дополнительная информация
-          </div>
+          <div
+            class="events_item_text"
+            v-html="archiveEvent.post_content"
+          ></div>
           <ul class="events_item_list">
             <li>
               <svg class="w20 fill_none stroke_black">
@@ -31,7 +32,7 @@
                   xlink:href="@/assets/imgs/sprite.symbol.svg#location"
                 ></use>
               </svg>
-              Свердловская обл, г Екатеринбург
+              {{ archiveEvent.adress }}
             </li>
             <li>
               <svg class="w20 fill_none stroke_black">
@@ -39,126 +40,23 @@
                   xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
                 ></use>
               </svg>
-              20 января 2024
+              {{ dateForEvent(archiveEvent.date) }}
             </li>
             <li>
               <svg class="w20 fill_none stroke_black">
                 <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
               </svg>
-              19:00-21:30
+              {{ archiveEvent.start }}{{ ` - ${archiveEvent.end}` }}
             </li>
           </ul>
         </div>
         <div class="events_item_btns">
-          <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
-        </div>
-      </div>
-    </div>
-    <div class="events_col">
-      <div class="events_item">
-        <div class="label label_cat">
-          <svg class="w24 fill_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-            ></use>
-          </svg>
-        </div>
-        <div class="item_img">
-          <img src="@/assets/imgs/events_img.png" alt="" />
-        </div>
-        <div class="events_item_body">
-          <a href="#" class="item_title">
-            <span> Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит” </span>
-            <svg class="w24 stroke_black">
-              <use
-                xlink:href="@/assets/imgs/sprite.symbol.svg#arrow_up_right"
-              ></use>
-            </svg>
-          </a>
-          <div class="events_item_text">
-            Дополнительная информация Дополнительная информация
-          </div>
-          <ul class="events_item_list">
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#location"
-                ></use>
-              </svg>
-              Свердловская обл, г Екатеринбург
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
-                ></use>
-              </svg>
-              20 января 2024
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
-              </svg>
-              19:00-21:30
-            </li>
-          </ul>
-        </div>
-        <div class="events_item_btns">
-          <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
-        </div>
-      </div>
-    </div>
-    <div class="events_col">
-      <div class="events_item">
-        <div class="label label_cat">
-          <svg class="w24 fill_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-            ></use>
-          </svg>
-        </div>
-        <div class="item_img">
-          <img src="@/assets/imgs/events_img.png" alt="" />
-        </div>
-        <div class="events_item_body">
-          <a href="#" class="item_title">
-            <span> Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит” </span>
-            <svg class="w24 stroke_black">
-              <use
-                xlink:href="@/assets/imgs/sprite.symbol.svg#arrow_up_right"
-              ></use>
-            </svg>
-          </a>
-          <div class="events_item_text">
-            Дополнительная информация Дополнительная информация
-          </div>
-          <ul class="events_item_list">
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#location"
-                ></use>
-              </svg>
-              Свердловская обл, г Екатеринбург
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use
-                  xlink:href="@/assets/imgs/sprite.symbol.svg#calendar"
-                ></use>
-              </svg>
-              20 января 2024
-            </li>
-            <li>
-              <svg class="w20 fill_none stroke_black">
-                <use xlink:href="@/assets/imgs/sprite.symbol.svg#watch"></use>
-              </svg>
-              19:00-21:30
-            </li>
-          </ul>
-        </div>
-        <div class="events_item_btns">
-          <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
+          <a
+            :href="decodeURIComponent(archiveEvent.link)"
+            target="_blank"
+            class="btn btn_small btn_opacity"
+            >Подробнее</a
+          >
         </div>
       </div>
     </div>
@@ -166,16 +64,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-const events = ref([
-  { title: "Все" },
-  { title: "Футбол" },
-  { title: "Хоккей" },
-  { title: "Другие спортивные мероприятия" },
-  { title: "Культурно-массовые мероприятия" },
-]);
-const selectedDate = ref("");
-const selectedEventType = ref(events.value[0].title);
+import { useLkData } from "@/stores/LkData";
+const LkDataStore = useLkData();
+const userEventsArchive = LkDataStore.userEventsArchive;
 
 const format = (date) => {
   let dateFrom = {
@@ -200,11 +91,30 @@ const format = (date) => {
 
   return `${dateFrom} - ${dateTo}`;
 };
+
+function dateForEvent(inputDate) {
+  const [month, day, year] = inputDate.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  return `${date.getDate()} ${
+    [
+      "января",
+      "февраля",
+      "марта",
+      "апреля",
+      "мая",
+      "июня",
+      "июля",
+      "августа",
+      "сентября",
+      "октября",
+      "ноября",
+      "декабря",
+    ][date.getMonth()]
+  } ${date.getFullYear()}`;
+}
 </script>
 
 <style lang="scss">
-@import "vue-select/dist/vue-select.css";
-
 .events_col {
   width: 50% !important;
 }
