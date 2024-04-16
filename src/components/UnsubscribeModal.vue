@@ -133,8 +133,8 @@ const getUnsubscribe = (e) => {
       })
     )
     .then((res) => {
-      console.log(res.data);
       btn.classList.remove("sending");
+      emit("closeModal", "showBottomModal");
     })
     .catch((error) => {
       console.log("Ошибка!!!", error);

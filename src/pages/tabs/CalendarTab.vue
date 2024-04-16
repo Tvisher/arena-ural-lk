@@ -127,6 +127,7 @@ const daysHasEventsArr = [...new Set(allEvents.map((eventEl) => eventEl.date))];
 const selectedDate = ref(formatDate(new Date()));
 const isMultiCalendar = ref("");
 const highlightedDates = ref(daysHasEventsArr);
+
 const modalMessage = ref("");
 const showModal = ref(false);
 const modalStatus = ref(null);
@@ -152,8 +153,14 @@ const showUnsubscribeModal = (e, eventItemId) => {
   unsubscribeModalData.value.show = true;
 };
 
-const closeUnsubscribeModal = () => {
+const closeUnsubscribeModal = (showBottomModal) => {
   unsubscribeModalData.value.show = false;
+  if (showBottomModal) {
+    modalMessage.value = "Вы успешно отказались от участия в мероприятии.";
+    modalStatus.value = true;
+    showModal.value = true;
+    setTimeout(() => (showModal.value = false), 5000);
+  }
 };
 
 const isHasInUserEvents = (id) => {

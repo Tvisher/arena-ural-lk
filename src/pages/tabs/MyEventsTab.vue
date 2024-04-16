@@ -99,6 +99,14 @@
     </div>
   </div>
   <transition name="fade">
+    <BottomModal
+      :title="modalMessage"
+      :status="modalStatus"
+      v-if="showModal"
+      @closeModal="showModal = false"
+    />
+  </transition>
+  <transition name="fade">
     <UnsubscribeModal
       v-if="unsubscribeModalData.show"
       :eventData="unsubscribeModalData.eventData"
@@ -109,6 +117,7 @@
 
 <script setup>
 import UnsubscribeModal from "@/components/UnsubscribeModal.vue";
+import BottomModal from "@/components/BottomModal.vue";
 
 import { ref } from "vue";
 import { useLkData } from "@/stores/LkData";
@@ -120,6 +129,10 @@ const unsubscribeModalData = ref({
   eventData: null,
 });
 
+const modalMessage = ref("");
+const showModal = ref(false);
+const modalStatus = ref(null);
+
 const showUnsubscribeModal = (e, eventItemId) => {
   e.preventDefault();
   console.log(userEvents);
@@ -128,8 +141,14 @@ const showUnsubscribeModal = (e, eventItemId) => {
   unsubscribeModalData.value.show = true;
 };
 
-const closeUnsubscribeModal = () => {
+const closeUnsubscribeModal = (showBottomModal) => {
   unsubscribeModalData.value.show = false;
+  if (showBottomModal) {
+    modalMessage.value = "Вы успешно отказались от участия в мероприятии.";
+    modalStatus.value = true;
+    showModal.value = true;
+    setTimeout(() => (showModal.value = false), 5000);
+  }
 };
 
 const eventsTypes = eventsTypesData.map((el) => ({
