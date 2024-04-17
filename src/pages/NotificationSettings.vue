@@ -37,8 +37,16 @@
       >Изменить</a
     >
   </div>
+  <transition name="fade">
+    <BottomModal
+      :title="modalMessage"
+      v-if="showModal"
+      @closeModal="showModal = false"
+    />
+  </transition>
 </template>
 <script setup>
+import BottomModal from "@/components/BottomModal.vue";
 import axios from "axios";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
@@ -49,6 +57,8 @@ const eventsTypes = LkDataStore.allEventsTypres;
 const { userSubscribes } = storeToRefs(LkDataStore);
 const userSubscribesCopy = JSON.parse(JSON.stringify(userSubscribes.value));
 const selectedEventsTypes = ref(userSubscribesCopy);
+const modalMessage = ref("");
+const showModal = ref(false);
 
 const isChecked = (value) => selectedEventsTypes.value.includes(value);
 
@@ -72,12 +82,9 @@ const saveEdit = () => {
       JSON.stringify(editedData)
     )
     .then((res) => {
-      console.log(res);
-      if (res.data) {
-        // e.target.classList.remove("sending");
-        // showModal.value = true;
-        // setTimeout(() => (showModal.value = false), 5000);
-      }
+      modalMessage.value = "Настройки уведомлений успешно изменены";
+      showModal.value = true;
+      setTimeout(() => (showModal.value = false), 5000);
     })
     .catch((error) => {
       console.log("Ошибка!!!", error);

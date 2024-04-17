@@ -22,7 +22,7 @@
           :to="{ name: 'TabItem', params: { tabId: 'notifications' } }"
         >
           <span>Уведомления</span>
-          <div class="notif-link__count">99+</div>
+          <div class="notif-link__count">{{ nitificationCount }}</div>
         </router-link>
       </div>
 
@@ -46,6 +46,11 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { useLkData } from "@/stores/LkData";
+const LkDataStore = useLkData();
+let nitificationCount = LkDataStore.notifications.length;
+nitificationCount = nitificationCount < 100 ? nitificationCount : "99+";
+</script>
 
 <style lang="scss"></style>

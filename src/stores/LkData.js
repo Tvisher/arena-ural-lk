@@ -29,7 +29,7 @@ export const useLkData = defineStore("LkData", () => {
     const allEvents = ref([]);
     const userEvents = ref([]);
     const userEventsArchive = ref([]);
-
+    const notifications = ref([]);
     const allEventsTypres = ref([]);
 
     // Actions
@@ -48,13 +48,18 @@ export const useLkData = defineStore("LkData", () => {
         userData.value.socials.tg = data.telegram;
         userData.value.socials.whatsapp = data.whatsapp;
         userData.value.socials.vk = data.vk;
+
         allEvents.value = data.gigs;
         allEventsTypres.value = data.sport;
+
         userEvents.value = data.gigs.filter(el => el.hasOwnProperty('usergig') && el.status.value == 1);
+
         userEventsArchive.value = data.gigs.filter(el => el.hasOwnProperty('usergig') && el.status.value == 2);
+
         userSubscribes.value = Array.isArray(data.sport_user)
             ? data.sport_user
             : Object.values(data.sport_user);
+        notifications.value = data.user_message;
     };
 
     const updateUserData = (data) => {
@@ -96,6 +101,7 @@ export const useLkData = defineStore("LkData", () => {
     };
 
     return {
+        notifications,
         userSubscribes,
         updateUserData,
         getAppData,

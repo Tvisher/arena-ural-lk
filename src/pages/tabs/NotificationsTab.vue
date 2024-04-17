@@ -28,62 +28,77 @@
     </router-link>
   </div>
   <div class="notifications-list">
-    <div class="date-title">Сегодня</div>
-    <div class="notification-item">
-      <div class="notification-item__content">
-        <a href="javascript:void(0)" class="notification-item__title"
-          >Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит”</a
-        >
-        <div class="notification-item__descr">
-          We’re looking for an experienced engineering manager to join our team.
+    <div class="date-wrapper" v-for="date in notificationDates">
+      <div class="date-title">{{ date }}</div>
+      <div
+        class="notification-item"
+        v-for="notification in groupedByDate[date]"
+      >
+        <div class="notification-item__content">
+          <a
+            :href="notification.linkgig"
+            target="_blank"
+            class="notification-item__title"
+            >{{ notification.namegig }}</a
+          >
+          <div class="notification-item__descr">
+            {{ notification.text }}
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="date-title">Вчера</div>
-
-    <div class="notification-item">
-      <div class="notification-item__content">
-        <a href="javascript:void(0)" class="notification-item__title"
-          >Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит”</a
-        >
-        <div class="notification-item__descr">
-          We’re looking for an experienced engineering manager to join our team.
-        </div>
-      </div>
-    </div>
-    <div class="date-title">30.04.2024</div>
-
-    <div class="notification-item">
-      <div class="notification-item__content">
-        <a href="javascript:void(0)" class="notification-item__title"
-          >Мир чемпионат РПЛ ФК “Урал” - ФК “Зенит”</a
-        >
-        <div class="notification-item__descr">
-          We’re looking for an experienced engineering manager to join our team.
-        </div>
-        <div class="events_item_btns">
-          <a href="#" class="btn btn_small">Подать заявку</a>
-          <a href="#" class="btn btn_small btn_opacity">Подробнее</a>
-        </div>
-      </div>
-      <div class="event-block__nameplates">
-        <div class="label label_cat">
-          <svg class="w24 fill_none" style="stroke: #ef723b">
-            <use xlink:href="@/assets/imgs/sprite.symbol.svg#alert"></use>
-          </svg>
-          <span>Срочная замена</span>
-        </div>
+        <!-- <div class="event-block__nameplates">
+          <div class="label label_cat">
+            <svg class="w24 fill_none" style="stroke: #ef723b">
+              <use xlink:href="@/assets/imgs/sprite.symbol.svg#alert"></use>
+            </svg>
+            <span>{{ notification.text }}</span>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
+import { useLkData } from "@/stores/LkData";
+const LkDataStore = useLkData();
+
+function groupByDate(array) {
+  return array.reduce((acc, obj) => {
+    const date = obj.date_mess;
+    if (!acc[date]) {
+      acc[date] = [obj];
+    } else {
+      acc[date].push(obj);
+    }
+    return acc;
+  }, {});
+}
+
+const groupedByDate = groupByDate(LkDataStore.notifications);
+const notificationDates = Object.keys(groupedByDate);
+// Функция преобразования строки даты в объект Date
+function parseDate(dateString) {
+  const parts = dateString.split(".");
+  // new Date(year, monthIndex, day)
+  return new Date(parts[2], parts[1] - 1, parts[0]);
+}
+// Сравнивает две даты
+function compareDates(date1, date2) {
+  return parseDate(date1) - parseDate(date2);
+}
+// Сортировка массива дат
+notificationDates.sort(compareDates).reverse();
+
 const currentTab = ref("actual");
 const setCurrenTab = (tabName) => (currentTab.value = tabName);
 </script>
 
 <style lang="scss" scoped>
+.date-wrapper {
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+}
 .notifications-list {
   display: flex;
   flex-direction: column;
@@ -141,6 +156,7 @@ const setCurrenTab = (tabName) => (currentTab.value = tabName);
 
 .notification-item {
   display: flex;
+  align-items: center;
   border-radius: 16px;
   border: 1px solid #d0d5dd;
   background-color: #f9fafb;
@@ -157,6 +173,14 @@ const setCurrenTab = (tabName) => (currentTab.value = tabName);
 
 .event-block__nameplates {
   flex-shrink: 0;
+  .label_cat {
+    img,
+    svg {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+  }
 }
 
 .notification-item__title {
@@ -167,7 +191,8 @@ const setCurrenTab = (tabName) => (currentTab.value = tabName);
   font-weight: 600;
   line-height: 133%;
   /* 133.333% */
-  margin-bottom: 8px;
+  // margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .notification-item__descr {

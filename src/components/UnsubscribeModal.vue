@@ -32,11 +32,17 @@
       <div class="unsubscribe_modal__inner" v-if="props.eventData.date_mess">
         <div class="unsubscribe_modal__title">Причина отмены записи</div>
         <div class="unsubscribe_modal__descr">Укажите причину отказа</div>
-        <textarea
-          class="unsubscribe_modal__field"
-          placeholder="Причина"
-          v-model.trim="reasonMessage"
-        ></textarea>
+        <div
+          class="unsubscribe_modal__message"
+          :class="{ error: invalidMessage && checkValid }"
+        >
+          <textarea
+            class="unsubscribe_modal__field"
+            placeholder="Причина"
+            v-model.trim="reasonMessage"
+          ></textarea>
+          <div class="error-mes">Пожалуйста укажите причину отмены записи</div>
+        </div>
         <div class="unsubscribe_modal__btns">
           <button type="button" class="btn btn_white" data-close>
             Отменить
@@ -91,7 +97,7 @@
 <script setup>
 import axios from "axios";
 
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
@@ -101,6 +107,9 @@ const props = defineProps(["eventData"]);
 const emit = defineEmits(["closeModal"]);
 
 const reasonMessage = ref("");
+const checkValid = ref(false);
+
+const invalidMessage = computed(() => reasonMessage.value.length < 3);
 
 const closeModal = (e) => {
   const target = e.target;
@@ -115,13 +124,15 @@ const closeModal = (e) => {
 };
 
 const getUnsubscribe = (e) => {
+  checkValid.value = true;
+  if (invalidMessage.value) return;
   const btn = e.target;
   btn.classList.add("sending");
-  console.log({
-    userId,
-    reasonMessage: reasonMessage.value,
-    evendId: props.eventData.ID,
-  });
+  // console.log({
+  //   userId,
+  //   reasonMessage: reasonMessage.value,
+  //   evendId: props.eventData.ID,
+  // });
 
   axios
     .post(
@@ -134,7 +145,7 @@ const getUnsubscribe = (e) => {
     )
     .then((res) => {
       btn.classList.remove("sending");
-      emit("closeModal", "showBottomModal");
+      emit("closeModal", props.eventData.ID);
     })
     .catch((error) => {
       console.log("Ошибка!!!", error);
@@ -266,7 +277,6 @@ const getUnsubscribe = (e) => {
 }
 
 .unsubscribe_modal__field {
-  margin-bottom: 32px;
   width: 100%;
   padding: 14px 14px;
   resize: none;
@@ -275,6 +285,24 @@ const getUnsubscribe = (e) => {
   border: 1px solid #d0d5dd;
   background: #fff;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.unsubscribe_modal__message {
+  margin-bottom: 32px;
+  &.error {
+    .error-mes {
+      display: block;
+    }
+    .unsubscribe_modal__field {
+      border-color: red;
+    }
+  }
+  .error-mes {
+    line-height: 100%;
+    display: none;
+    font-size: 12px;
+    color: red;
+  }
 }
 
 .unsubscribe_modal__btns {

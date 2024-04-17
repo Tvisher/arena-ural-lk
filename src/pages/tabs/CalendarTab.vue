@@ -22,9 +22,13 @@
     >
       <div class="event-block__wrapper">
         <div class="event-block__info">
-          <div class="event-block__title">
+          <a
+            :href="decodeURIComponent(eventItem.link)"
+            target="_blank"
+            class="event-block__title"
+          >
             {{ eventItem.post_title }}
-          </div>
+          </a>
           <div class="event-block__descr" v-html="eventItem.post_content"></div>
           <ul class="events_item_list">
             <li>
@@ -53,11 +57,7 @@
         </div>
         <div class="event-block__nameplates">
           <div class="label label_cat">
-            <!-- <svg class="w24 fill_none">
-              <use
-                xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-              ></use>
-            </svg> -->
+            <img :src="eventItem.type_img" alt="" />
             <span>{{ eventItem.type.label }}</span>
           </div>
           <div class="label label_text">{{ eventItem.status.label }}</div>
@@ -153,12 +153,13 @@ const showUnsubscribeModal = (e, eventItemId) => {
   unsubscribeModalData.value.show = true;
 };
 
-const closeUnsubscribeModal = (showBottomModal) => {
+const closeUnsubscribeModal = (eventId) => {
   unsubscribeModalData.value.show = false;
-  if (showBottomModal) {
+  if (eventId) {
     modalMessage.value = "Вы успешно отказались от участия в мероприятии.";
     modalStatus.value = true;
     showModal.value = true;
+    userEvents.value = userEvents.value.filter((el) => el.ID !== eventId);
     setTimeout(() => (showModal.value = false), 5000);
   }
 };

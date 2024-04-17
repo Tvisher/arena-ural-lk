@@ -41,13 +41,18 @@
               xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
             ></use>
           </svg> -->
+          <img :src="userEvent.type_img" alt="" />
         </div>
         <div class="label label_text">{{ userEvent.status.label }}</div>
         <div class="item_img">
           <img :src="userEvent.img" alt="" />
         </div>
         <div class="events_item_body">
-          <a href="#" class="item_title">
+          <a
+            :href="decodeURIComponent(userEvent.link)"
+            target="_blank"
+            class="item_title"
+          >
             <span> {{ userEvent.post_title }}</span>
             <svg class="w24 stroke_black">
               <use
@@ -120,9 +125,12 @@ import UnsubscribeModal from "@/components/UnsubscribeModal.vue";
 import BottomModal from "@/components/BottomModal.vue";
 
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
+
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
-const userEvents = LkDataStore.userEvents;
+const { userEvents } = storeToRefs(LkDataStore);
+
 const eventsTypesData = LkDataStore.allEventsTypres;
 const unsubscribeModalData = ref({
   show: false,
@@ -135,18 +143,19 @@ const modalStatus = ref(null);
 
 const showUnsubscribeModal = (e, eventItemId) => {
   e.preventDefault();
-  console.log(userEvents);
-  const currentEvent = userEvents.find((el) => el.ID == eventItemId);
+  const currentEvent = userEvents.value.find((el) => el.ID == eventItemId);
   unsubscribeModalData.value.eventData = currentEvent;
   unsubscribeModalData.value.show = true;
 };
 
-const closeUnsubscribeModal = (showBottomModal) => {
+const closeUnsubscribeModal = (eventId) => {
   unsubscribeModalData.value.show = false;
-  if (showBottomModal) {
+  if (eventId) {
     modalMessage.value = "Вы успешно отказались от участия в мероприятии.";
     modalStatus.value = true;
     showModal.value = true;
+    userEvents.value = userEvents.value.filter((el) => el.ID !== eventId);
+
     setTimeout(() => (showModal.value = false), 5000);
   }
 };

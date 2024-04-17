@@ -3,11 +3,7 @@
     <div class="events_col" v-for="archiveEvent in userEventsArchive">
       <div class="events_item">
         <div class="label label_cat">
-          <!-- <svg class="w24 fill_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-            ></use>
-          </svg> -->
+          <img :src="archiveEvent.type_img" alt="" />
         </div>
         <div class="item_img">
           <img :src="archiveEvent.img" alt="" />
