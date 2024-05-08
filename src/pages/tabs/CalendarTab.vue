@@ -67,7 +67,11 @@
         <a
           href="#"
           class="btn btn_small"
-          v-if="eventItem.status.value == 1 && !isHasInUserEvents(eventItem.ID)"
+          v-if="
+            (eventItem.status.value == 1 && !isHasInUserEvents(eventItem.ID)) ||
+            (eventItem.hasOwnProperty('usergigreservonly') &&
+              eventItem.status.value == 1)
+          "
           @click="applyForEvent($event, eventItem.ID)"
         >
           Подать заявку
@@ -76,7 +80,24 @@
         <a
           href="#"
           class="btn btn_small"
-          v-if="isHasInUserEvents(eventItem.ID) && eventItem.status.value == 1"
+          v-if="
+            eventItem.status.value == 4 &&
+            !isHasInUserEvents(eventItem.ID) &&
+            !eventItem.hasOwnProperty('usergigreservonly')
+          "
+          @click="applyForEvent($event, eventItem.ID)"
+        >
+          Подать заявку на резерв
+        </a>
+
+        <a
+          href="#"
+          class="btn btn_small"
+          v-if="
+            isHasInUserEvents(eventItem.ID) &&
+            eventItem.status.value == 1 &&
+            !eventItem.hasOwnProperty('usergigreservonly')
+          "
           @click="showUnsubscribeModal($event, eventItem.ID)"
         >
           Отказаться от участия
@@ -203,7 +224,16 @@ const applyForEvent = (e, eventid) => {
       if (res.data.status == true) {
         const currentEvent = allEvents.find((el) => el.ID == eventid);
         currentEvent.usergig = "y";
-        userEvents.value.push(currentEvent);
+        if (currentEvent.hasOwnProperty("usergigreservonly")) {
+          delete currentEvent.usergigreservonly;
+        }
+        const oldEv = userEvents.value.find((el) => el.ID == eventid);
+        if (!oldEv) {
+          userEvents.value.push(currentEvent);
+        } else {
+          delete oldEv.currentEvent.usergigreservonly;
+        }
+        console.log(userEvents.value);
       }
 
       setTimeout(() => (showModal.value = false), 5000);

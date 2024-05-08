@@ -96,7 +96,12 @@
         <!-- <div class="education-block__title">Обучение пройдено!</div> -->
         <div class="education-block__title">Пройдите обучение!</div>
       </div>
-      <button class="btn btn_some-ghost">Пройти обучение</button>
+      <a
+        href="https://arena-ural.ru/training/"
+        target="_blank"
+        class="btn btn_some-ghost"
+        >Пройти обучение</a
+      >
     </div>
   </div>
 </template>

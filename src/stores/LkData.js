@@ -52,7 +52,7 @@ export const useLkData = defineStore("LkData", () => {
         allEvents.value = data.gigs;
         allEventsTypres.value = data.sport;
 
-        userEvents.value = data.gigs.filter(el => el.hasOwnProperty('usergig') && el.status.value == 1);
+        userEvents.value = data.gigs.filter(el => el.hasOwnProperty('usergig') && el.status.value == 1 || el.hasOwnProperty('usergig') && el.status.value == 4);
 
         userEventsArchive.value = data.gigs.filter(el => el.hasOwnProperty('usergig') && el.status.value == 2);
 

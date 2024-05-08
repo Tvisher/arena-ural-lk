@@ -59,6 +59,7 @@
       <label class="form_input_group" style="margin-bottom: 6px">
         <span class="form_input_name">Дата рождения</span>
         <VueDatePicker
+          readonly
           v-model="userSettingsData.birthday"
           model-type="dd.MM.yyyy"
           class="my-events-calendar user-settings-calendar"

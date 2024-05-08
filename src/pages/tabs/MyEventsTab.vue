@@ -33,14 +33,13 @@
     </div>
   </div>
   <div class="events_list">
-    <div class="events_col" v-for="userEvent in userEvents" :key="userEvent.ID">
+    <div
+      class="events_col"
+      v-for="userEvent in filteredUserEventsList"
+      :key="userEvent.ID"
+    >
       <div class="events_item">
         <div class="label label_cat">
-          <!-- <svg class="w24 fill_none">
-            <use
-              xlink:href="@/assets/imgs/sprite.symbol.svg#category_football"
-            ></use>
-          </svg> -->
           <img :src="userEvent.type_img" alt="" />
         </div>
         <div class="label label_text">{{ userEvent.status.label }}</div>
@@ -91,8 +90,24 @@
             href="#"
             class="btn btn_small"
             @click="showUnsubscribeModal($event, userEvent.ID)"
+            v-if="
+              userEvent.status.value != 4 &&
+              !userEvent.hasOwnProperty('usergigreservonly')
+            "
             >Отказаться от участия</a
           >
+
+          <a
+            href="#"
+            class="btn btn_small"
+            @click="applyForEvent($event, userEvent.ID)"
+            v-if="
+              userEvent.status.value != 4 &&
+              userEvent.hasOwnProperty('usergigreservonly')
+            "
+            >Подать заявку</a
+          >
+
           <a
             :href="decodeURIComponent(userEvent.link)"
             target="_blank"
@@ -123,13 +138,15 @@
 <script setup>
 import UnsubscribeModal from "@/components/UnsubscribeModal.vue";
 import BottomModal from "@/components/BottomModal.vue";
+import axios from "axios";
 
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
 const { userEvents } = storeToRefs(LkDataStore);
+const allEvents = LkDataStore.allEvents;
 
 const eventsTypesData = LkDataStore.allEventsTypres;
 const unsubscribeModalData = ref({
@@ -140,6 +157,40 @@ const unsubscribeModalData = ref({
 const modalMessage = ref("");
 const showModal = ref(false);
 const modalStatus = ref(null);
+
+const eventsTypes = eventsTypesData.map((el) => ({
+  title: el.name,
+  code: el.code,
+}));
+eventsTypes.unshift({
+  title: "Все",
+  code: "all",
+});
+const selectedDate = ref("");
+const selectedEventType = ref(eventsTypes[0]);
+
+const filteredUserEventsList = computed(() => {
+  return userEvents.value
+    .filter((el) => {
+      if (selectedEventType.value.code == "all") {
+        return el;
+      }
+      return el.type.value == selectedEventType.value.code;
+    })
+    .filter((el) => {
+      if (!selectedDate.value) {
+        return el;
+      }
+      return isDateInRange(el.date, selectedDate.value);
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateA - dateB;
+    });
+});
+
+console.log(filteredUserEventsList);
 
 const showUnsubscribeModal = (e, eventItemId) => {
   e.preventDefault();
@@ -159,17 +210,6 @@ const closeUnsubscribeModal = (eventId) => {
     setTimeout(() => (showModal.value = false), 5000);
   }
 };
-
-const eventsTypes = eventsTypesData.map((el) => ({
-  title: el.name,
-  code: el.code,
-}));
-eventsTypes.unshift({
-  title: "Все",
-  code: "all",
-});
-const selectedDate = ref("");
-const selectedEventType = ref(eventsTypes[0]);
 
 const format = (date) => {
   let dateFrom = {
@@ -215,6 +255,59 @@ function dateForEvent(inputDate) {
     ][date.getMonth()]
   } ${date.getFullYear()}`;
 }
+
+function isDateInRange(dateToCheck, dateArray) {
+  const dateObj = new Date(dateToCheck);
+  const sortedDates = dateArray
+    .map((date) => new Date(date))
+    .sort((a, b) => a - b);
+  return sortedDates.some(
+    (date, index) => dateObj >= date && dateObj <= sortedDates[index + 1]
+  );
+}
+
+const applyForEvent = (e, eventid) => {
+  e.preventDefault();
+  const target = e.target;
+  if (target.classList.contains("sending")) return;
+  target.classList.add("sending");
+  const postData = {
+    eventId: String(eventid),
+    user: LkDataStore.userData.userId,
+  };
+
+  axios
+    .post(
+      "/wp-content/themes/sp-theme-master/ajax/zayv_user.php",
+      JSON.stringify(postData)
+    )
+    .then((res) => {
+      console.log(res.data);
+      target.classList.remove("sending");
+      modalMessage.value = res.data.message;
+      modalStatus.value = res.data.status;
+      showModal.value = true;
+      if (res.data.status == true) {
+        const currentEvent = allEvents.find((el) => el.ID == eventid);
+        currentEvent.usergig = "y";
+        if (currentEvent.hasOwnProperty("usergigreservonly")) {
+          delete currentEvent.usergigreservonly;
+        }
+        const oldEv = userEvents.value.find((el) => el.ID == eventid);
+        if (!oldEv) {
+          userEvents.value.push(currentEvent);
+        } else {
+          delete oldEv.currentEvent.usergigreservonly;
+        }
+        console.log(userEvents.value);
+      }
+
+      setTimeout(() => (showModal.value = false), 5000);
+    })
+    .catch((error) => {
+      console.log("Ошибка!!!", error);
+    });
+};
 </script>
 
 <style lang="scss">

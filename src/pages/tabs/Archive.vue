@@ -9,7 +9,11 @@
           <img :src="archiveEvent.img" alt="" />
         </div>
         <div class="events_item_body">
-          <a href="#" class="item_title">
+          <a
+            :href="decodeURIComponent(archiveEvent.link)"
+            target="_blank"
+            class="item_title"
+          >
             <span> {{ archiveEvent.post_title }}</span>
             <svg class="w24 stroke_black">
               <use
