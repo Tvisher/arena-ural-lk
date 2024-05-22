@@ -19,8 +19,14 @@
             />
           </svg>
         </div>
-        <div class="bottom-modal__ico" :class="{ reject: !props.status }"></div>
-        <div class="bottom-modal__text" v-html="props.title"></div>
+        <div class="bottom-modal__head">
+          <div
+            class="bottom-modal__ico"
+            :class="{ reject: !props.status }"
+          ></div>
+          <div class="bottom-modal__title" v-html="props.title"></div>
+        </div>
+        <div class="bottom-modal__text" v-html="props.message"></div>
       </div>
     </div>
   </div>
@@ -29,6 +35,7 @@
 <script setup>
 const props = defineProps({
   title: String,
+  message: String,
   status: {
     type: Boolean,
     default: true,
@@ -44,9 +51,18 @@ const emit = defineEmits(["closeModal"]);
   left: 0px;
   width: 100%;
   z-index: 3;
+  pointer-events: none;
+}
+
+.bottom-modal__head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
 }
 
 .bottom-modal__content {
+  pointer-events: all;
   margin-right: -70px;
   position: relative;
   margin-left: auto;
@@ -72,10 +88,21 @@ const emit = defineEmits(["closeModal"]);
 }
 .bottom-modal__text {
   color: #101828;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 155%;
+  a {
+    color: #ef723b;
+  }
+}
+
+.bottom-modal__title {
+  color: #101828;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 155%;
+  line-height: 120%;
 }
 
 .bottom-modal__ico {
@@ -87,7 +114,7 @@ const emit = defineEmits(["closeModal"]);
   height: 48px;
   border-radius: 50%;
   // border: 8px solid #ecfdf3;
-  margin-bottom: 20px;
+  flex-shrink: 0;
   &.reject {
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='56' height='56' viewBox='0 0 56 56' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect x='4' y='4' width='48' height='48' rx='24' fill='%23FFD3C1'/%3e%3crect x='4' y='4' width='48' height='48' rx='24' stroke='%23FFF5F1' stroke-width='8'/%3e%3cpath d='M31 25L25 31M25 25L31 31M38 28C38 33.5228 33.5228 38 28 38C22.4772 38 18 33.5228 18 28C18 22.4772 22.4772 18 28 18C33.5228 18 38 22.4772 38 28Z' stroke='%23EF723B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e ");
   }

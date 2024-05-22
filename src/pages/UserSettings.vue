@@ -261,6 +261,7 @@
         href="#"
         class="btn btn_icon"
         style="background-color: #0077ff; color: #fff"
+        @click.prevent="getOrSetVkId"
       >
         <svg
           width="28"
@@ -274,7 +275,8 @@
             fill="white"
           />
         </svg>
-        <span>Привязать</span>
+        <span v-if="!userDataReactive.vkId">Привязать</span>
+        <span v-else>Отвязать</span>
       </a>
       <div class="events_item_btns">
         <button type="button" class="btn btn_white" @click="$router.back()">
@@ -299,11 +301,15 @@ import AddUserImage from "@/components/AddUserImage.vue";
 import { useIMask } from "vue-imask";
 import axios from "axios";
 import BottomModal from "@/components/BottomModal.vue";
+import { storeToRefs } from "pinia";
 
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
 const userData = LkDataStore.userData;
 const updateUserData = LkDataStore.updateUserData;
+
+const { userData: userDataReactive } = storeToRefs(LkDataStore);
+
 const checkValidate = ref(false);
 const showModal = ref(false);
 
@@ -367,6 +373,77 @@ const saveEdit = (e) => {
         console.log("Ошибка!!!", error);
       });
   });
+};
+
+const updateVkId = (vkIdParam) => {
+  axios
+    .post("/wp-content/themes/sp-theme-master/ajax/updatevkid.php", {
+      id: userData.userId,
+      vkid: vkIdParam,
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function () {
+      console.log("Произошла ошибка при обработке запроса.");
+    });
+};
+
+const getOrSetVkId = () => {
+  if (!userDataReactive.value.vkId) {
+    const clientId = "51892630";
+    const redirectUri =
+      "https://arena-ural.ru/wp-content/themes/sp-theme-master/ajax/vkid.php";
+    const authUrl = `https://oauth.vk.com/authorize?client_id=${clientId}&display=page&redirect_uri=${redirectUri}&scope=offline&response_type=code&v=5.131`;
+
+    // Открытие окна авторизации
+    const authWindow = window.open(authUrl, "VKAuth", "width=600,height=400");
+
+    // Функция для получения параметров URL
+    function getUrlParams(url) {
+      const params = {};
+      const parser = new URL(url);
+      const queryString = parser.search.slice(1);
+      const queries = queryString.split("&");
+      queries.forEach(function (query) {
+        const [key, value] = query.split("=");
+        params[key] = value;
+      });
+      return params;
+    }
+
+    // Таймер для проверки завершения авторизации
+    const checkAuth = setInterval(function () {
+      try {
+        const params = getUrlParams(authWindow.location.href);
+        if (params.code) {
+          clearInterval(checkAuth);
+          authWindow.close();
+          axios
+            .post("/wp-content/themes/sp-theme-master/ajax/vkid.php", {
+              code: params.code,
+            })
+            .then(function (response) {
+              if (response.data.success) {
+                console.log(response.data.data.id);
+                userDataReactive.value.vkId = response.data.data.id;
+                updateVkId(response.data.data.id);
+              } else {
+                alert("Ошибка: " + response.data.error);
+              }
+            })
+            .catch(function () {
+              console.log("Произошла ошибка при обработке запроса.");
+            });
+        }
+      } catch (e) {
+        // Пропускаем ошибки из-за CORS
+      }
+    }, 500);
+  } else {
+    userDataReactive.value.vkId = "";
+    updateVkId("");
+  }
 };
 
 const { el: phoneField } = useIMask({

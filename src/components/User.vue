@@ -85,21 +85,28 @@
       </div>
     </div>
     <hr />
-    <div class="lk-user__btns">
+    <div class="lk-user__btns" style="flex-direction: column">
       <router-link class="btn" :to="{ name: 'UserSettings' }">
         Редактировать профиль
       </router-link>
+      <a href="/forgotpass/" class="btn btn_white">Сменить пароль</a>
     </div>
-    <div class="user-education-block">
+    <div
+      class="user-education-block"
+      :class="{ passed: userData.trainingСompleted }"
+    >
       <div class="education-block__wrapper">
         <div class="education-block__ico"></div>
-        <!-- <div class="education-block__title">Обучение пройдено!</div> -->
-        <div class="education-block__title">Пройдите обучение!</div>
+        <div class="education-block__title" v-if="userData.trainingСompleted">
+          Обучение пройдено!
+        </div>
+        <div class="education-block__title" v-else>Пройдите обучение!</div>
       </div>
       <a
         href="https://arena-ural.ru/training/"
         target="_blank"
         class="btn btn_some-ghost"
+        v-if="!userData.trainingСompleted"
         >Пройти обучение</a
       >
     </div>
@@ -110,6 +117,7 @@ import { computed } from "vue";
 import { useLkData } from "@/stores/LkData";
 const LkDataStore = useLkData();
 const userData = LkDataStore.userData;
+console.log(userData.trainingСompleted);
 
 function calculateAge(birthday) {
   const parts = birthday.split(".");
@@ -131,4 +139,8 @@ const isUserHasSocials = computed(
 );
 </script>
 
-<style></style>
+<style scoped>
+.btn_some-ghost {
+  width: 100%;
+}
+</style>

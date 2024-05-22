@@ -117,8 +117,9 @@
 
   <transition name="fade">
     <BottomModal
-      :title="modalMessage"
+      :title="modalTitle"
       :status="modalStatus"
+      :message="modalMessage"
       v-if="showModal"
       @closeModal="showModal = false"
     />
@@ -149,6 +150,7 @@ const selectedDate = ref(formatDate(new Date()));
 const isMultiCalendar = ref("");
 const highlightedDates = ref(daysHasEventsArr);
 
+const modalTitle = ref("");
 const modalMessage = ref("");
 const showModal = ref(false);
 const modalStatus = ref(null);
@@ -177,6 +179,7 @@ const showUnsubscribeModal = (e, eventItemId) => {
 const closeUnsubscribeModal = (eventId) => {
   unsubscribeModalData.value.show = false;
   if (eventId) {
+    modalTitle.value = "Готово";
     modalMessage.value = "Вы успешно отказались от участия в мероприятии.";
     modalStatus.value = true;
     showModal.value = true;
@@ -218,6 +221,7 @@ const applyForEvent = (e, eventid) => {
     .then((res) => {
       console.log(res.data);
       target.classList.remove("sending");
+      modalTitle.value = res.data.title;
       modalMessage.value = res.data.message;
       modalStatus.value = res.data.status;
       showModal.value = true;
@@ -234,9 +238,8 @@ const applyForEvent = (e, eventid) => {
           delete oldEv.currentEvent.usergigreservonly;
         }
         console.log(userEvents.value);
+        setTimeout(() => (showModal.value = false), 5000);
       }
-
-      setTimeout(() => (showModal.value = false), 5000);
     })
     .catch((error) => {
       console.log("Ошибка!!!", error);

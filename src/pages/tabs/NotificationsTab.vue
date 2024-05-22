@@ -1,7 +1,7 @@
 <template>
   <div class="notifications-head">
     <div class="notifications-tabs-btns">
-      <div
+      <!-- <div
         class="notifications-tabs-btn"
         @click="setCurrenTab('actual')"
         :class="{ active: currentTab == 'actual' }"
@@ -21,7 +21,7 @@
         :class="{ active: currentTab == 'all' }"
       >
         Все
-      </div>
+      </div> -->
     </div>
     <router-link class="btn" :to="{ name: 'NotificationSettings' }">
       Настройка уведомлений

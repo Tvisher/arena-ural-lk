@@ -120,7 +120,8 @@
   </div>
   <transition name="fade">
     <BottomModal
-      :title="modalMessage"
+      :title="modalTitle"
+      :message="modalMessage"
       :status="modalStatus"
       v-if="showModal"
       @closeModal="showModal = false"
@@ -154,6 +155,7 @@ const unsubscribeModalData = ref({
   eventData: null,
 });
 
+const modalTitle = ref("");
 const modalMessage = ref("");
 const showModal = ref(false);
 const modalStatus = ref(null);
@@ -202,6 +204,7 @@ const showUnsubscribeModal = (e, eventItemId) => {
 const closeUnsubscribeModal = (eventId) => {
   unsubscribeModalData.value.show = false;
   if (eventId) {
+    modalTitle.value = "Готово";
     modalMessage.value = "Вы успешно отказались от участия в мероприятии.";
     modalStatus.value = true;
     showModal.value = true;
@@ -284,6 +287,7 @@ const applyForEvent = (e, eventid) => {
     .then((res) => {
       console.log(res.data);
       target.classList.remove("sending");
+      modalTitle.value = res.data.title;
       modalMessage.value = res.data.message;
       modalStatus.value = res.data.status;
       showModal.value = true;
