@@ -420,9 +420,17 @@ const getOrSetVkId = () => {
           clearInterval(checkAuth);
           authWindow.close();
           axios
-            .post("/wp-content/themes/sp-theme-master/ajax/vkid.php", {
-              code: params.code,
-            })
+            .post(
+              "/wp-content/themes/sp-theme-master/ajax/vkid.php",
+              {
+                code: params.code,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+              }
+            )
             .then(function (response) {
               if (response.data.success) {
                 console.log(response.data.data.id);
