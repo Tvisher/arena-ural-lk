@@ -561,14 +561,12 @@ svg {
   }
 }
 
-.swiper-container-horizontal
-  > .swiper-pagination-bullets
-  .swiper-pagination-bullet,
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
 .swiper-pagination-bullet {
   margin: 0 20px;
 }
 
-.swiper-container-horizontal > .swiper-pagination-bullets,
+.swiper-container-horizontal>.swiper-pagination-bullets,
 .swiper-pagination-custom,
 .swiper-pagination-fraction {
   // bottom: -54px;
@@ -819,7 +817,7 @@ svg {
     overflow: hidden;
     border-radius: 8px;
 
-    & > .select2-results__options {
+    &>.select2-results__options {
       max-height: 280px;
       scrollbar-color: $color_orange transparent;
       scrollbar-width: thin;
@@ -866,9 +864,7 @@ svg {
     }
   }
 
-  .select2-results__option--highlighted.select2-results__option--selectable:not(
-      .select2-results__option--selected
-    ) {
+  .select2-results__option--highlighted.select2-results__option--selectable:not(.select2-results__option--selected) {
     background: #f9fafb;
     opacity: 1;
     color: $color_orange;
@@ -895,7 +891,7 @@ svg {
   cursor: pointer;
   transition: $transition;
   background: $color_orange;
-  border-radius: 8px;
+  border-radius: 9px;
   text-transform: inherit;
   position: relative;
   font-weight: 600;
@@ -1183,40 +1179,35 @@ form {
   .svg-elem-1 {
     stroke-dashoffset: 3979.256299444678px;
     stroke-dasharray: 3979.256299444678px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0s;
   }
 
   .svg-elem-2 {
     stroke-dashoffset: 1359.1680263507906px;
     stroke-dasharray: 1359.1680263507906px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0.12s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.12s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.12s;
   }
 
   .svg-elem-3 {
     stroke-dashoffset: 2131.9998191338796px;
     stroke-dasharray: 2131.9998191338796px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0.24s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.24s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.24s;
   }
 
   .svg-elem-4 {
     stroke-dashoffset: 1359.1680263507906px;
     stroke-dasharray: 1359.1680263507906px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0.36s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.36s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.36s;
   }
 
   .svg-elem-5 {
     stroke-dashoffset: 540px;
     stroke-dasharray: 540px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0.48s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.48s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.48s;
   }
 }
@@ -1233,45 +1224,41 @@ form {
   .svg-elem-1 {
     stroke-dashoffset: 1664.1349916053662px;
     stroke-dasharray: 1664.1349916053662px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0s;
   }
 
   .svg-elem-2 {
     stroke-dashoffset: 569.1749695382019px;
     stroke-dasharray: 569.1749695382019px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0.12s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.12s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.12s;
   }
 
   .svg-elem-3 {
     stroke-dashoffset: 652.3096792930871px;
     stroke-dasharray: 652.3096792930871px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0.24s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.24s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.24s;
   }
 
   .svg-elem-4 {
     stroke-dashoffset: 331.8672286269283px;
     stroke-dasharray: 331.8672286269283px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0.36s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.36s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.36s;
   }
 
   .svg-elem-5 {
     stroke-dashoffset: 226.83602905273438px;
     stroke-dasharray: 226.83602905273438px;
-    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715)
-      0.48s;
+    -webkit-transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.48s;
     transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) 0.48s;
   }
 }
 
 .bg_svg_orange {
+
   .bg_svg,
   .bg_svg_two {
     stroke: $color_orange;
@@ -1288,8 +1275,10 @@ form {
   position: relative;
 
   &.aos-animate {
+
     .bg_svg,
     .bg_svg_two {
+
       .svg-elem-1,
       .svg-elem-2,
       .svg-elem-3,
@@ -1698,6 +1687,7 @@ form {
 }
 
 @keyframes animBtn {
+
   0%,
   9%,
   100% {
@@ -1712,6 +1702,7 @@ form {
 }
 
 @keyframes animImg {
+
   0%,
   9%,
   100% {
@@ -2251,6 +2242,7 @@ form {
 }
 
 .swiper-slide-active {
+
   .advantages_item_title,
   .advantages_item_text,
   .advantages_item .btn {
@@ -2768,7 +2760,7 @@ form {
     margin: 0;
     cursor: pointer;
 
-    &:checked ~ .categories_item {
+    &:checked~.categories_item {
       border-color: $color_orange;
       background: #fff6f1;
 
@@ -3887,6 +3879,7 @@ form {
 
   .header {
     &.active {
+
       .logo,
       .mobile_menu_btn {
         z-index: 101;
@@ -4256,14 +4249,12 @@ form {
     display: flex;
   }
 
-  .swiper-container-horizontal
-    > .swiper-pagination-bullets
-    .swiper-pagination-bullet,
+  .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
   .swiper-pagination-bullet {
     margin: 0 10px;
   }
 
-  .swiper-container-horizontal > .swiper-pagination-bullets,
+  .swiper-container-horizontal>.swiper-pagination-bullets,
   .swiper-pagination-custom,
   .swiper-pagination-fraction {
     bottom: -44px;

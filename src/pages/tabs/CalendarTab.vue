@@ -61,6 +61,15 @@
             <span>{{ eventItem.type.label }}</span>
           </div>
           <div class="label label_text">{{ eventItem.status.label }}</div>
+          <span
+            class="btn"
+            style="pointer-events: none"
+            v-if="
+              eventItem.hasOwnProperty('usergigreservonly') &&
+              eventItem.status.value == 4
+            "
+            >Вы в резерве</span
+          >
         </div>
       </div>
       <div class="events_item_btns">

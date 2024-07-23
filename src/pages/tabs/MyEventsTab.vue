@@ -32,7 +32,17 @@
       </VueDatePicker>
     </div>
   </div>
-  <div class="events_list">
+  <div class="no-events-plate" v-if="filteredUserEventsList.length < 1">
+    <div class="no-events-plate__title">нет мероприятий</div>
+    <router-link
+      class="btn no-events-plate__btn"
+      :to="{ name: 'TabItem', params: { tabId: 'calendar' } }"
+    >
+      Найти мероприятие
+    </router-link>
+  </div>
+
+  <div class="events_list" v-else>
     <div
       class="events_col"
       v-for="userEvent in filteredUserEventsList"
@@ -42,7 +52,19 @@
         <div class="label label_cat">
           <img :src="userEvent.type_img" alt="" />
         </div>
-        <div class="label label_text">{{ userEvent.status.label }}</div>
+        <div class="label__wrap">
+          <div class="label">{{ userEvent.status.label }}</div>
+          <span
+            class="btn"
+            style="pointer-events: none"
+            v-if="
+              userEvent.hasOwnProperty('usergigreservonly') &&
+              userEvent.status.value == 4
+            "
+            >Вы в резерве</span
+          >
+        </div>
+
         <div class="item_img">
           <img :src="userEvent.img" alt="" />
         </div>
@@ -317,6 +339,25 @@ const applyForEvent = (e, eventid) => {
 <style lang="scss">
 @import "vue-select/dist/vue-select.css";
 
+.no-events-plate {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #148d4e;
+  border-radius: 32px;
+  padding: 54px;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='832' height='149' viewBox='0 0 832 149' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cmask id='mask0_2074_26565' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='0' width='832' height='149'%3e%3crect width='832' height='149' rx='32' fill='%23148D4E'/%3e%3c/mask%3e%3cg mask='url(%23mask0_2074_26565)'%3e%3cg opacity='0.5'%3e%3ccircle cx='291.669' cy='74.5746' r='233.575' transform='rotate(-180 291.669 74.5746)' stroke='white' stroke-width='2' stroke-miterlimit='10'/%3e%3ccircle cx='291.67' cy='74.5751' r='79.7032' transform='rotate(-180 291.67 74.5751)' stroke='white' stroke-width='2' stroke-miterlimit='10'/%3e%3cellipse cx='650' cy='75' rx='105' ry='105' transform='rotate(-180 650 75)' stroke='white' stroke-width='2' stroke-miterlimit='10'/%3e%3cellipse cx='650' cy='74.5' rx='47' ry='46.5' transform='rotate(-180 650 74.5)' stroke='white' stroke-width='2' stroke-miterlimit='10'/%3e%3cpath d='M606 77H371' stroke='white' stroke-width='2' stroke-miterlimit='10'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e ");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.no-events-plate__title {
+  font-size: 28px;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "Code", sans-serif;
+  font-weight: 700;
+}
+
 .events_col {
   width: 50% !important;
 }
@@ -471,6 +512,19 @@ const applyForEvent = (e, eventid) => {
 @media (max-width: 700px) {
   .events_col {
     width: 100% !important;
+  }
+}
+
+.label__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  z-index: 1;
+  .label {
+    position: static !important;
   }
 }
 </style>

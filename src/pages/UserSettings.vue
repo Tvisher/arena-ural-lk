@@ -161,12 +161,12 @@
     </div>
     <div class="form_input_row one-col">
       <label class="form_input_group" style="margin-bottom: 6px">
-        <span class="form_input_name">Паспорт болельщика</span>
+        <span class="form_input_name">Карта болельщика</span>
         <span class="form_input_wrapper">
           <input
             type="text"
             name="name"
-            placeholder="Паспорт болельщика"
+            placeholder="Карта болельщика"
             class="form_input"
             v-model.trim="userSettingsData.fanID"
           />
@@ -174,8 +174,8 @@
       </label>
     </div>
     <div class="some-message">
-      инструкция по получению паспорта болельщика доступна
-      <a href="javascript:void(0)">"тут"</a>
+      Инструкция по получению карты болельщика доступна
+      <a href="/карта-болельщика/" target="_blank">"тут"</a>
     </div>
     <hr />
     <div class="form_input_row one-col">

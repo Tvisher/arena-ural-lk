@@ -13,7 +13,7 @@
         <svg class="w20 fill_none">
           <use xlink:href="@/assets/imgs/sprite.symbol.svg#passport"></use>
         </svg>
-        Паспорт болельщика
+        Карта болельщика
       </div>
       <div v-if="userData.fanID" class="fan-id__value">
         № {{ userData.fanID }}
